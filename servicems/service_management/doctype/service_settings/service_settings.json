@@ -1,15 +1,11 @@
 {
- "_liked_by": "[\"Administrator\"]",
  "actions": [],
  "creation": "2021-06-24 10:04:05.742941",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "default_is_billable",
-  "company",
-  "parts_warehouse",
-  "workshop_warehouse"
+  "default_is_billable"
  ],
  "fields": [
   {
@@ -17,30 +13,12 @@
    "fieldname": "default_is_billable",
    "fieldtype": "Check",
    "label": "Default is Billable"
-  },
-  {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company"
-  },
-  {
-   "fieldname": "parts_warehouse",
-   "fieldtype": "Link",
-   "label": "Parts Warehouse",
-   "options": "Warehouse"
-  },
-  {
-   "fieldname": "workshop_warehouse",
-   "fieldtype": "Link",
-   "label": "Workshop Warehouse",
-   "options": "Warehouse"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-06-24 15:36:32.942327",
+ "modified": "2021-06-25 02:28:23.897363",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Settings",

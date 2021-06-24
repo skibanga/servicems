@@ -46,26 +46,36 @@
  "fields": [
   {
    "fieldname": "naming_series",
-   "fieldtype": "Data",
-   "label": "Naming Series"
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "SJC-.YY.-.######"
   },
   {
+   "default": "Initiated",
    "fieldname": "status",
-   "fieldtype": "Link",
+   "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Status",
-   "options": "Job Card Status"
+   "options": "Initiated\nActive\nInspection\nRepairing\nAwaiting Parts\nCompleted\nClosed",
+   "reqd": 1
   },
   {
+   "fetch_from": "workshop.company",
    "fieldname": "company",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Company",
-   "options": "Company"
+   "options": "Company",
+   "read_only": 1,
+   "reqd": 1
   },
   {
    "fieldname": "workshop",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Workshop",
-   "options": "Service Workshop"
+   "options": "Service Workshop",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_6",
@@ -81,18 +91,25 @@
    "fieldname": "service_item_name",
    "fieldtype": "Link",
    "label": "Service Item Name",
-   "options": "Service Vehicle"
+   "options": "Service Vehicle",
+   "reqd": 1
   },
   {
+   "fetch_from": "service_item_name.customer",
    "fieldname": "customer",
    "fieldtype": "Link",
    "label": "Customer",
-   "options": "Customer"
+   "options": "Customer",
+   "read_only": 1,
+   "reqd": 1
   },
   {
+   "default": "Now",
    "fieldname": "receiving_datetime",
    "fieldtype": "Datetime",
-   "label": "Receiving DateTime"
+   "in_list_view": 1,
+   "label": "Receiving DateTime",
+   "reqd": 1
   },
   {
    "fieldname": "section_break_11",
@@ -169,29 +186,39 @@
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "service_item_name.vehicle_model",
    "fieldname": "vehicle_model",
    "fieldtype": "Data",
-   "label": "Vehicle Model"
+   "label": "Vehicle Model",
+   "read_only": 1
   },
   {
+   "fetch_from": "service_item_name.make",
    "fieldname": "make",
    "fieldtype": "Data",
-   "label": "Make"
+   "label": "Make",
+   "read_only": 1
   },
   {
+   "fetch_from": "service_item_name.type",
    "fieldname": "type",
    "fieldtype": "Data",
-   "label": "Type"
+   "label": "Type",
+   "read_only": 1
   },
   {
+   "fetch_from": "service_item_name.engine_number",
    "fieldname": "engine_number",
    "fieldtype": "Data",
-   "label": "Engine Number"
+   "label": "Engine Number",
+   "read_only": 1
   },
   {
+   "fetch_from": "service_item_name.chassis_number",
    "fieldname": "chassis_number",
    "fieldtype": "Data",
-   "label": "Chassis Number"
+   "label": "Chassis Number",
+   "read_only": 1
   },
   {
    "fieldname": "task",
@@ -232,7 +259,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-06-24 13:54:14.859285",
+ "modified": "2021-06-25 02:27:54.007281",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",

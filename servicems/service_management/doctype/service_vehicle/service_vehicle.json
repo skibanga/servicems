@@ -1,6 +1,4 @@
 {
- "_comments": "[]",
- "_liked_by": "[]",
  "actions": [],
  "autoname": "field:registration_number",
  "creation": "2021-05-26 18:56:54.116049",
@@ -24,20 +22,26 @@
   {
    "fieldname": "registration_number",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Registration Number",
+   "reqd": 1,
    "unique": 1
   },
   {
    "fieldname": "customer",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Customer",
-   "options": "Customer"
+   "options": "Customer",
+   "reqd": 1
   },
   {
    "fieldname": "vehicle_model",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Vehicle Model",
-   "options": "Vehicle Model"
+   "options": "Vehicle Model",
+   "reqd": 1
   },
   {
    "fieldname": "engine_number",
@@ -82,7 +86,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-06-24 13:25:52.158012",
+ "modified": "2021-06-25 02:26:46.103241",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Vehicle",

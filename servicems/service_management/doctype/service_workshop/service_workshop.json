@@ -1,6 +1,4 @@
 {
- "_comments": "[]",
- "_liked_by": "[]",
  "actions": [],
  "autoname": "field:workshop_name",
  "creation": "2021-05-25 15:56:33.525728",
@@ -10,30 +8,57 @@
  "field_order": [
   "workshop_name",
   "company",
-  "location"
+  "location",
+  "column_break_4",
+  "parts_warehouse",
+  "workshop_warehouse"
  ],
  "fields": [
   {
    "fieldname": "workshop_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Name",
+   "reqd": 1,
    "unique": 1
   },
   {
    "fieldname": "company",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Company",
-   "options": "Company"
+   "options": "Company",
+   "reqd": 1
   },
   {
    "fieldname": "location",
    "fieldtype": "Data",
    "label": "Location"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "parts_warehouse",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Parts Warehouse",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "workshop_warehouse",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Workshop Warehouse",
+   "options": "Warehouse",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-06-24 15:59:20.782850",
+ "modified": "2021-06-25 02:25:15.460220",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Workshop",
