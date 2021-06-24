@@ -44,7 +44,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Service Task Templates",
-   "link_to": "Service Task Templates",
+   "link_to": "Job Card Template",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -122,6 +122,15 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Parts and Cosumables",
+   "link_to": "Parts and Consumable",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Settings",
    "link_type": "DocType",
    "onboard": 0,
@@ -137,7 +146,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-06-24 12:19:59.053299",
+ "modified": "2021-06-24 15:13:04.572879",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service",
