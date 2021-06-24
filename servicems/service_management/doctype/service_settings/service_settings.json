@@ -1,4 +1,5 @@
 {
+ "_liked_by": "[\"Administrator\"]",
  "actions": [],
  "creation": "2021-06-24 10:04:05.742941",
  "doctype": "DocType",
@@ -12,8 +13,9 @@
  ],
  "fields": [
   {
+   "default": "0",
    "fieldname": "default_is_billable",
-   "fieldtype": "Data",
+   "fieldtype": "Check",
    "label": "Default is Billable"
   },
   {
@@ -38,7 +40,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-06-24 11:28:29.384222",
+ "modified": "2021-06-24 15:36:32.942327",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Settings",
