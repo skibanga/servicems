@@ -33,12 +33,25 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-06-24 11:48:51.087128",
+ "modified": "2021-06-24 15:59:20.782850",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Workshop",
  "owner": "Administrator",
- "permissions": [],
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
