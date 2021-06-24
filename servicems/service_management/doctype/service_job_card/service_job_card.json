@@ -1,0 +1,257 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2021-06-24 12:11:22.557561",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "status",
+  "workshop",
+  "column_break_6",
+  "receiving_datetime",
+  "naming_series",
+  "company",
+  "section_break_7",
+  "service_item_doctype",
+  "service_item_name",
+  "customer",
+  "vehicle_model",
+  "column_break_11",
+  "make",
+  "type",
+  "engine_number",
+  "chassis_number",
+  "section_break_11",
+  "complains",
+  "section_break_13",
+  "faults",
+  "section_break_15",
+  "service_template",
+  "service_task_templates",
+  "section_break_17",
+  "task",
+  "section_break_26",
+  "parts_and_consumable_supplied",
+  "section_break_31",
+  "quotation_number",
+  "delivery_note",
+  "sales_order_number",
+  "invoice_number",
+  "column_break_38",
+  "service_charges",
+  "spares_cost",
+  "total"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Data",
+   "label": "Naming Series"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Link",
+   "label": "Status",
+   "options": "Job Card Status"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "workshop",
+   "fieldtype": "Link",
+   "label": "Workshop",
+   "options": "Service Workshop"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "service_item_doctype",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Service Item Doctype"
+  },
+  {
+   "fieldname": "service_item_name",
+   "fieldtype": "Link",
+   "label": "Service Item Name",
+   "options": "Service Vehicle"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "receiving_datetime",
+   "fieldtype": "Datetime",
+   "label": "Receiving DateTime"
+  },
+  {
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "complains",
+   "fieldtype": "Table",
+   "label": "Complains",
+   "options": "Complains"
+  },
+  {
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "faults",
+   "fieldtype": "Table",
+   "label": "Faults",
+   "options": "Faults"
+  },
+  {
+   "fieldname": "section_break_15",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "service_template",
+   "fieldtype": "Link",
+   "label": "Service Template",
+   "options": "Service Template"
+  },
+  {
+   "fieldname": "service_task_templates",
+   "fieldtype": "Table",
+   "label": "Service Task Templates",
+   "options": "Job Card Template"
+  },
+  {
+   "fieldname": "section_break_17",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "parts_and_consumable_supplied",
+   "fieldtype": "Table",
+   "label": "Parts and Consumable Supplied",
+   "options": "Job Card Items Supplied"
+  },
+  {
+   "fieldname": "quotation_number",
+   "fieldtype": "Data",
+   "label": "Quotation Number"
+  },
+  {
+   "fieldname": "delivery_note",
+   "fieldtype": "Data",
+   "label": "Delivery Note"
+  },
+  {
+   "fieldname": "sales_order_number",
+   "fieldtype": "Data",
+   "label": "Sales Order Number"
+  },
+  {
+   "fieldname": "invoice_number",
+   "fieldtype": "Data",
+   "label": "Invoice Number"
+  },
+  {
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "vehicle_model",
+   "fieldtype": "Data",
+   "label": "Vehicle Model"
+  },
+  {
+   "fieldname": "make",
+   "fieldtype": "Data",
+   "label": "Make"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Data",
+   "label": "Type"
+  },
+  {
+   "fieldname": "engine_number",
+   "fieldtype": "Data",
+   "label": "Engine Number"
+  },
+  {
+   "fieldname": "chassis_number",
+   "fieldtype": "Data",
+   "label": "Chassis Number"
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Table",
+   "label": "Task",
+   "options": "Job Card Tasks"
+  },
+  {
+   "fieldname": "section_break_26",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "service_charges",
+   "fieldtype": "Currency",
+   "label": "Service Charges",
+   "read_only": 1
+  },
+  {
+   "fieldname": "spares_cost",
+   "fieldtype": "Currency",
+   "label": "Spares Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total",
+   "fieldtype": "Currency",
+   "label": "Total",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_38",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_31",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2021-06-24 13:54:14.859285",
+ "modified_by": "Administrator",
+ "module": "Service Management",
+ "name": "Service Job Card",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
