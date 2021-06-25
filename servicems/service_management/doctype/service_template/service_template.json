@@ -13,9 +13,9 @@
   "column_break_5",
   "rate",
   "section_break_6",
-  "service_template_task",
+  "tasks",
   "section_break_8",
-  "service_template_parts_and_consumable",
+  "parts",
   "section_break_10"
  ],
  "fields": [
@@ -44,21 +44,8 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "service_template_task",
-   "fieldtype": "Table",
-   "label": "Service Template Task",
-   "options": "Template Task",
-   "reqd": 1
-  },
-  {
    "fieldname": "section_break_8",
    "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "service_template_parts_and_consumable",
-   "fieldtype": "Table",
-   "label": "Service Template Parts and Consumable",
-   "options": "Template Parts and Consumables"
   },
   {
    "fieldname": "section_break_10",
@@ -82,11 +69,24 @@
    "label": "Rate",
    "non_negative": 1,
    "reqd": 1
+  },
+  {
+   "fieldname": "parts",
+   "fieldtype": "Table",
+   "label": "Service Template Parts and Consumable",
+   "options": "Template Parts and Consumables"
+  },
+  {
+   "fieldname": "tasks",
+   "fieldtype": "Table",
+   "label": "Service Template Task",
+   "options": "Template Task",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-06-25 16:55:30.485509",
+ "modified": "2021-06-25 19:42:28.915152",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Template",

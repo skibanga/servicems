@@ -29,7 +29,7 @@
   "section_break_15",
   "services",
   "section_break_17",
-  "task",
+  "tasks",
   "section_break_26",
   "parts",
   "supplied_patrs",
@@ -181,12 +181,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "task",
-   "fieldtype": "Table",
-   "label": "Task",
-   "options": "Job Card Tasks"
-  },
-  {
    "fieldname": "section_break_26",
    "fieldtype": "Section Break"
   },
@@ -240,11 +234,17 @@
    "label": "Supplied Patrs",
    "options": "Supplied Patrs",
    "read_only": 1
+  },
+  {
+   "fieldname": "tasks",
+   "fieldtype": "Table",
+   "label": "Task",
+   "options": "Job Card Tasks"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-06-25 19:31:06.554007",
+ "modified": "2021-06-25 19:56:33.840970",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",
