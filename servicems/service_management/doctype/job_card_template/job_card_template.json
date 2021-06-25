@@ -1,39 +1,52 @@
 {
- "_comments": "[]",
- "_liked_by": "[]",
  "actions": [],
  "creation": "2021-06-10 18:13:46.385234",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "template_name",
+  "service",
   "item",
-  "rate"
+  "rate",
+  "is_billable"
  ],
  "fields": [
   {
-   "fieldname": "template_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Template Name"
-  },
-  {
+   "fetch_from": "service.item",
    "fieldname": "item",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Item",
-   "options": "Item"
+   "options": "Item",
+   "read_only": 1
   },
   {
+   "fetch_from": "service.rate",
    "fieldname": "rate",
-   "fieldtype": "Currency",
+   "fieldtype": "Float",
+   "in_list_view": 1,
    "label": "Rate"
+  },
+  {
+   "fieldname": "service",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Service Template",
+   "options": "Service Template"
+  },
+  {
+   "default": "0",
+   "fetch_from": "service.is_billable",
+   "fieldname": "is_billable",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": " Is billable "
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-06-24 13:34:39.028964",
+ "modified": "2021-06-25 17:08:26.193082",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Job Card Template",

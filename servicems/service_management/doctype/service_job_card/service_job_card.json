@@ -27,17 +27,16 @@
   "section_break_13",
   "faults",
   "section_break_15",
-  "service_template",
-  "service_task_templates",
+  "services",
   "section_break_17",
   "task",
   "section_break_26",
-  "parts_and_consumable_supplied",
+  "parts",
   "section_break_31",
-  "quotation_number",
-  "delivery_note",
-  "sales_order_number",
-  "invoice_number",
+  "quotation",
+  "sales_order",
+  "material_request",
+  "invoice",
   "column_break_38",
   "service_charges",
   "spares_cost",
@@ -136,46 +135,8 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "service_template",
-   "fieldtype": "Link",
-   "label": "Service Template",
-   "options": "Service Template"
-  },
-  {
-   "fieldname": "service_task_templates",
-   "fieldtype": "Table",
-   "label": "Service Task Templates",
-   "options": "Job Card Template"
-  },
-  {
    "fieldname": "section_break_17",
    "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "parts_and_consumable_supplied",
-   "fieldtype": "Table",
-   "label": "Parts and Consumable Supplied",
-   "options": "Job Card Items Supplied"
-  },
-  {
-   "fieldname": "quotation_number",
-   "fieldtype": "Data",
-   "label": "Quotation Number"
-  },
-  {
-   "fieldname": "delivery_note",
-   "fieldtype": "Data",
-   "label": "Delivery Note"
-  },
-  {
-   "fieldname": "sales_order_number",
-   "fieldtype": "Data",
-   "label": "Sales Order Number"
-  },
-  {
-   "fieldname": "invoice_number",
-   "fieldtype": "Data",
-   "label": "Invoice Number"
   },
   {
    "fieldname": "section_break_7",
@@ -245,7 +206,7 @@
   {
    "fieldname": "total",
    "fieldtype": "Currency",
-   "label": "Total",
+   "label": "Total Excl. Vat",
    "read_only": 1
   },
   {
@@ -255,11 +216,43 @@
   {
    "fieldname": "section_break_31",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "quotation",
+   "fieldtype": "Data",
+   "label": "Quotation Number"
+  },
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Data",
+   "label": "Sales Order Number"
+  },
+  {
+   "fieldname": "material_request",
+   "fieldtype": "Data",
+   "label": "Matrial Transfair"
+  },
+  {
+   "fieldname": "invoice",
+   "fieldtype": "Data",
+   "label": "Invoice Number"
+  },
+  {
+   "fieldname": "services",
+   "fieldtype": "Table",
+   "label": "Service Task Templates",
+   "options": "Job Card Template"
+  },
+  {
+   "fieldname": "parts",
+   "fieldtype": "Table",
+   "label": "Parts and Consumable Supplied",
+   "options": "Job Card Items Supplied"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-06-25 02:27:54.007281",
+ "modified": "2021-06-25 17:09:31.648357",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",

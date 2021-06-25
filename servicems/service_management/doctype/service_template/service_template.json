@@ -1,6 +1,4 @@
 {
- "_comments": "[]",
- "_liked_by": "[]",
  "actions": [],
  "autoname": "field:template_name",
  "creation": "2021-06-10 19:01:23.359448",
@@ -12,6 +10,8 @@
   "item",
   "is_billable",
   "disabled",
+  "column_break_5",
+  "rate",
   "section_break_6",
   "service_template_task",
   "section_break_8",
@@ -22,8 +22,10 @@
   {
    "fieldname": "item",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Item",
-   "options": "Item"
+   "options": "Item",
+   "reqd": 1
   },
   {
    "default": "0",
@@ -45,7 +47,8 @@
    "fieldname": "service_template_task",
    "fieldtype": "Table",
    "label": "Service Template Task",
-   "options": "Template Task"
+   "options": "Template Task",
+   "reqd": 1
   },
   {
    "fieldname": "section_break_8",
@@ -64,13 +67,26 @@
   {
    "fieldname": "template_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Template Name",
+   "reqd": 1,
    "unique": 1
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Float",
+   "label": "Rate",
+   "non_negative": 1,
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-06-24 13:32:23.986322",
+ "modified": "2021-06-25 16:55:30.485509",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Template",
