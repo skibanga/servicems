@@ -1,0 +1,79 @@
+{
+ "actions": [],
+ "creation": "2021-06-25 19:29:58.986551",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "part_name",
+  "type",
+  "item",
+  "qty",
+  "rate",
+  "is_billable",
+  "material_request"
+ ],
+ "fields": [
+  {
+   "fieldname": "part_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Part Name",
+   "options": "Parts and Consumable",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "part_name.type",
+   "fieldname": "type",
+   "fieldtype": "Data",
+   "label": "Type"
+  },
+  {
+   "fetch_from": "part_name.item",
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Qty",
+   "reqd": 1
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Rate"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_billable",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is billable"
+  },
+  {
+   "fieldname": "material_request",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Matrial Transfair",
+   "options": "Material Request"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2021-06-25 19:30:17.833974",
+ "modified_by": "Administrator",
+ "module": "Service Management",
+ "name": "Supplied Patrs",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -32,10 +32,8 @@
   "task",
   "section_break_26",
   "parts",
+  "supplied_patrs",
   "section_break_31",
-  "quotation",
-  "sales_order",
-  "material_request",
   "invoice",
   "column_break_38",
   "service_charges",
@@ -118,7 +116,8 @@
    "fieldname": "complains",
    "fieldtype": "Table",
    "label": "Complains",
-   "options": "Complains"
+   "options": "Complains",
+   "reqd": 1
   },
   {
    "fieldname": "section_break_13",
@@ -218,21 +217,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "quotation",
-   "fieldtype": "Data",
-   "label": "Quotation Number"
-  },
-  {
-   "fieldname": "sales_order",
-   "fieldtype": "Data",
-   "label": "Sales Order Number"
-  },
-  {
-   "fieldname": "material_request",
-   "fieldtype": "Data",
-   "label": "Matrial Transfair"
-  },
-  {
    "fieldname": "invoice",
    "fieldtype": "Data",
    "label": "Invoice Number"
@@ -241,18 +225,26 @@
    "fieldname": "services",
    "fieldtype": "Table",
    "label": "Service Task Templates",
-   "options": "Job Card Template"
+   "options": "Job Card Template",
+   "reqd": 1
   },
   {
    "fieldname": "parts",
    "fieldtype": "Table",
    "label": "Parts and Consumable Supplied",
    "options": "Job Card Items Supplied"
+  },
+  {
+   "fieldname": "supplied_patrs",
+   "fieldtype": "Table",
+   "label": "Supplied Patrs",
+   "options": "Supplied Patrs",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-06-25 17:09:31.648357",
+ "modified": "2021-06-25 19:31:06.554007",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",
