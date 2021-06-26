@@ -3,11 +3,15 @@
 
 import frappe
 from frappe.model.document import Document
+from frappe.utils import nowdate, nowtime
 
 
 class ServiceJobCard(Document):
     def validate(self):
         self.update_tabels()
+
+    def before_submit(self):
+        self.create_matrial_transfer("before_submit")
 
     def update_tabels(self):
         for temp in self.services:
@@ -30,3 +34,57 @@ class ServiceJobCard(Document):
                         row.is_billable = part.is_billable
 
                 temp.applied = 1
+
+    @frappe.whitelist()
+    def create_stock_entry(self, type):
+        if self.parts and len(self.parts) > 0:
+            workshop = frappe.get_doc("Service Workshop", self.workshop)
+            items = []
+            for item in self.parts:
+                if item.qty > 0:
+                    items.append(
+                        {
+                            "s_warehouse": workshop.parts_warehouse,
+                            "t_warehouse": workshop.workshop_warehouse,
+                            "item_code": item.item,
+                            "qty": item.qty,
+                            "uom": frappe.get_value("Item", item.item, "stock_uom"),
+                        }
+                    )
+
+            if len(items) == 0:
+                return
+
+            doc = frappe.get_doc(
+                dict(
+                    doctype="Stock Entry",
+                    posting_date=nowdate(),
+                    posting_time=nowtime(),
+                    stock_entry_type="Material Transfer",
+                    purpose="Material Transfer",
+                    company=self.company,
+                    from_warehouse=workshop.parts_warehouse,
+                    to_warehouse=workshop.workshop_warehouse,
+                    items=items,
+                ),
+            )
+            frappe.flags.ignore_account_permission = True
+            doc.insert(ignore_permissions=True)
+            doc.submit()
+
+            left_parts = []
+            for row in self.parts:
+                if row.qty > 0:
+                    new_row = self.append("supplied_patrs", {})
+                    new_row.part_name = row.part_name
+                    new_row.item = row.item
+                    new_row.type = row.type
+                    new_row.qty = row.qty
+                    new_row.rate = row.rate
+                    new_row.is_billable = row.is_billable
+                    new_row.stock_entry = doc.name
+                else:
+                    left_parts.append(row)
+            self.parts = left_parts
+            if type == "call":
+                self.save()

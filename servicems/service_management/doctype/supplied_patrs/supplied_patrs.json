@@ -10,7 +10,7 @@
   "qty",
   "rate",
   "is_billable",
-  "material_request"
+  "stock_entry"
  ],
  "fields": [
   {
@@ -57,17 +57,17 @@
    "label": "Is billable"
   },
   {
-   "fieldname": "material_request",
+   "fieldname": "stock_entry",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Matrial Transfair",
-   "options": "Material Request"
+   "label": "Stock Entry",
+   "options": "Stock Entry"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-06-25 19:30:17.833974",
+ "modified": "2021-06-25 23:13:04.171979",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Supplied Patrs",
