@@ -38,7 +38,8 @@
   "column_break_38",
   "service_charges",
   "spares_cost",
-  "total"
+  "total",
+  "amended_from"
  ],
  "fields": [
   {
@@ -240,17 +241,29 @@
    "fieldtype": "Table",
    "label": "Task",
    "options": "Job Card Tasks"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Service Job Card",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2021-06-25 19:56:33.840970",
+ "modified": "2021-06-26 14:05:00.089237",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",
  "owner": "Administrator",
  "permissions": [
   {
+   "amend": 1,
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -260,6 +273,7 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],

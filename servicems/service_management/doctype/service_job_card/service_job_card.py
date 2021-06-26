@@ -3,6 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
+from frappe import _
 from frappe.utils import nowdate, nowtime
 
 
@@ -12,7 +13,8 @@ class ServiceJobCard(Document):
         self.set_totals()
 
     def before_submit(self):
-        self.create_matrial_transfer("before_submit")
+        self.create_stock_entry("before_submit")
+        self.create_invoice()
 
     def update_tabels(self):
         for temp in self.services:
@@ -92,6 +94,7 @@ class ServiceJobCard(Document):
             frappe.flags.ignore_account_permission = True
             doc.insert(ignore_permissions=True)
             doc.submit()
+            frappe.msgprint(_("Stock Entry Created {0}").format(doc.name), alert=True)
 
             left_parts = []
             for row in self.parts:
@@ -109,3 +112,58 @@ class ServiceJobCard(Document):
             self.parts = left_parts
             if type == "call":
                 self.save()
+
+    def create_invoice(self):
+        if self.status != "Completed":
+            return
+        items = []
+        workshop = frappe.get_doc("Service Workshop", self.workshop)
+        if self.services and len(self.services) > 0:
+            for item in self.services:
+                items.append(
+                    {
+                        "item_code": item.item,
+                        "qty": 1,
+                        "uom": frappe.get_value("Item", item.item, "stock_uom"),
+                        "warehouse": workshop.workshop_warehouse,
+                        "rate": item.rate if item.is_billable else 0,
+                    }
+                )
+        if self.supplied_patrs and len(self.supplied_patrs) > 0:
+            for item in self.supplied_patrs:
+                items.append(
+                    {
+                        "item_code": item.item,
+                        "qty": item.qty,
+                        "uom": frappe.get_value("Item", item.item, "stock_uom"),
+                        "warehouse": workshop.workshop_warehouse,
+                        "rate": item.rate if item.is_billable else 0,
+                    }
+                )
+
+            if len(items) == 0:
+                return
+            date = nowdate()
+            doc = frappe.get_doc(
+                dict(
+                    doctype="Sales Invoice",
+                    customer=self.customer,
+                    posting_date=date,
+                    due_date=date,
+                    update_stock=1,
+                    company=self.company,
+                    ignore_pricing_rule=1,
+                    set_warehouse=workshop.workshop_warehouse,
+                    items=items,
+                ),
+            )
+            frappe.flags.ignore_account_permission = True
+            doc.set_taxes()
+            doc.set_missing_values(for_validate=True)
+            doc.flags.ignore_mandatory = True
+            doc.calculate_taxes_and_totals()
+            doc.insert(ignore_permissions=True)
+            self.invoice = doc.name
+            frappe.msgprint(
+                _("Saeles Invoice Created {0}").format(doc.name), alert=True
+            )
