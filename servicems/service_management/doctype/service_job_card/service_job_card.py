@@ -9,6 +9,7 @@ from frappe.utils import nowdate, nowtime
 class ServiceJobCard(Document):
     def validate(self):
         self.update_tabels()
+        self.set_totals()
 
     def before_submit(self):
         self.create_matrial_transfer("before_submit")
@@ -34,6 +35,26 @@ class ServiceJobCard(Document):
                         row.is_billable = part.is_billable
 
                 temp.applied = 1
+
+    def set_totals(self):
+        self.service_charges = 0
+        self.spares_cost = 0
+        self.total = 0
+
+        if self.services:
+            for el in self.services:
+                if el.is_billable:
+                    self.service_charges += el.rate
+        if self.parts:
+            for el in self.parts:
+                if el.is_billable:
+                    self.spares_cost += el.rate * el.qty
+        if self.supplied_patrs:
+            for el in self.supplied_patrs:
+                if el.is_billable:
+                    self.spares_cost += el.rate * el.qty
+
+        self.total = self.service_charges + self.spares_cost
 
     @frappe.whitelist()
     def create_stock_entry(self, type):
