@@ -17,6 +17,10 @@ class ServiceJobCard(Document):
         self.create_stock_entry("before_submit")
         self.create_invoice()
 
+    def on_submit(self):
+        if self.status != "Completed":
+            frappe.throw(_("It is not allowed to submit if it is not completed"))
+
     def update_tabels(self):
         for temp in self.services:
             if not temp.applied:
