@@ -38,7 +38,11 @@ class ServiceJobCard(Document):
                         row.item = part.item
                         row.type = part.type
                         row.qty = part.qty
-                        row.rate = part.rate
+                        row.rate = get_item_price(
+                            part.item,
+                            self.get_price_list(temp_doc.price_list),
+                            self.company,
+                        )
                         row.is_billable = part.is_billable
 
                 temp.applied = 1
@@ -50,6 +54,9 @@ class ServiceJobCard(Document):
 
         if self.services:
             for el in self.services:
+                el.rate = get_item_price(
+                    el.item, self.get_price_list(el.price_list), self.company
+                )
                 if el.is_billable:
                     self.service_charges += el.rate
         if self.parts:
@@ -182,3 +189,31 @@ class ServiceJobCard(Document):
                 completed = False
         if not completed:
             frappe.throw(_("The Tasks is not Completed"))
+
+    def get_price_list(self, temp_price_list=None):
+        price_list = frappe.get_value("Customer", self.customer, "default_price_list")
+        if not price_list and temp_price_list:
+            price_list = temp_price_list
+        if not price_list:
+            price_list = frappe.get_value(
+                "Service Settings", "Service Settings", "price_list"
+            )
+        return price_list or ""
+
+
+def get_item_price(item_code, price_list, company):
+    price = 0
+    company_currency = frappe.get_value("Company", company, "default_currency")
+    item_prices_data = frappe.get_all(
+        "Item Price",
+        fields=["item_code", "price_list_rate", "currency"],
+        filters={
+            "price_list": price_list,
+            "item_code": item_code,
+            "currency": company_currency,
+        },
+        order_by="valid_from desc",
+    )
+    if len(item_prices_data):
+        price = item_prices_data[0].price_list_rate
+    return price

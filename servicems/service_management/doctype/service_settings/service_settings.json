@@ -5,7 +5,8 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "default_is_billable"
+  "default_is_billable",
+  "price_list"
  ],
  "fields": [
   {
@@ -13,12 +14,20 @@
    "fieldname": "default_is_billable",
    "fieldtype": "Check",
    "label": "Default is Billable"
+  },
+  {
+   "fieldname": "price_list",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Default Price List",
+   "options": "Price List",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-06-25 02:28:23.897363",
+ "modified": "2021-06-30 13:56:57.334323",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Settings",

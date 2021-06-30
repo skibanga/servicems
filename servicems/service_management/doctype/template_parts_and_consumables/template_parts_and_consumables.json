@@ -9,7 +9,6 @@
   "item",
   "type",
   "qty",
-  "rate",
   "is_billable"
  ],
  "fields": [
@@ -52,19 +51,12 @@
    "options": "Item",
    "read_only": 1,
    "reqd": 1
-  },
-  {
-   "fieldname": "rate",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Rate",
-   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-06-25 20:00:25.756896",
+ "modified": "2021-06-30 13:25:13.658689",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Template Parts and Consumables",

@@ -11,7 +11,7 @@
   "is_billable",
   "disabled",
   "column_break_5",
-  "rate",
+  "price_list",
   "section_break_6",
   "tasks",
   "section_break_8",
@@ -64,13 +64,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "rate",
-   "fieldtype": "Float",
-   "label": "Rate",
-   "non_negative": 1,
-   "reqd": 1
-  },
-  {
    "fieldname": "parts",
    "fieldtype": "Table",
    "label": "Service Template Parts and Consumable",
@@ -82,11 +75,17 @@
    "label": "Service Template Task",
    "options": "Template Task",
    "reqd": 1
+  },
+  {
+   "fieldname": "price_list",
+   "fieldtype": "Link",
+   "label": "Price List",
+   "options": "Price List"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-06-25 19:42:28.915152",
+ "modified": "2021-06-30 13:51:16.187645",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Template",
