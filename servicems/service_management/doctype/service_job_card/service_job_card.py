@@ -11,6 +11,7 @@ class ServiceJobCard(Document):
     def validate(self):
         self.update_tabels()
         self.set_totals()
+        self.vaildate_complete()
 
     def before_submit(self):
         self.create_stock_entry("before_submit")
@@ -167,3 +168,13 @@ class ServiceJobCard(Document):
             frappe.msgprint(
                 _("Saeles Invoice Created {0}").format(doc.name), alert=True
             )
+
+    def vaildate_complete(self):
+        if self.status != "Completed":
+            return
+        completed = True
+        for task in self.tasks:
+            if not task.completed:
+                completed = False
+        if not completed:
+            frappe.throw(_("The Tasks is not Completed"))
