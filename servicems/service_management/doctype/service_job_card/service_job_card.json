@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_guest_to_view": 1,
  "autoname": "naming_series:",
  "creation": "2021-06-24 12:11:22.557561",
  "doctype": "DocType",
@@ -39,7 +40,8 @@
   "service_charges",
   "spares_cost",
   "total",
-  "amended_from"
+  "amended_from",
+  "route"
  ],
  "fields": [
   {
@@ -250,12 +252,18 @@
    "options": "Service Job Card",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "route",
+   "fieldtype": "Data",
+   "label": "Route"
   }
  ],
+ "has_web_view": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-06-26 14:05:00.089237",
+ "modified": "2021-07-28 19:11:48.131262",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",
@@ -277,6 +285,7 @@
    "write": 1
   }
  ],
+ "route": "job-card",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

@@ -2,12 +2,12 @@
 # For license information, please see license.txt
 
 import frappe
-from frappe.model.document import Document
+from frappe.website.website_generator import WebsiteGenerator
 from frappe import _
 from frappe.utils import nowdate, nowtime
 
 
-class ServiceJobCard(Document):
+class ServiceJobCard(WebsiteGenerator):
     def validate(self):
         self.update_tabels()
         self.set_totals()
