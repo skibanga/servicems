@@ -23,6 +23,10 @@ class ServiceJobCard(WebsiteGenerator):
 
     def update_tabels(self):
         for temp in self.services:
+            if not temp.check_billable:
+                temp.is_billable = frappe.get_value(
+                    "Service Template", temp.service, "is_billable"
+                )
             if not temp.applied:
                 temp_doc = frappe.get_doc("Service Template", temp.service)
                 if temp_doc.tasks:

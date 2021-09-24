@@ -96,6 +96,15 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Sold by",
+   "link_to": "Sold By",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Services",
    "link_type": "DocType",
    "onboard": 0,
@@ -146,7 +155,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-06-24 15:53:46.804338",
+ "modified": "2021-09-24 14:50:43.577882",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service",
