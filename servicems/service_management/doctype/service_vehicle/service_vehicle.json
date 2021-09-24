@@ -13,6 +13,7 @@
   "column_break_5",
   "make",
   "type",
+  "sold_by",
   "section_break_8",
   "engine_number",
   "column_break_10",
@@ -82,11 +83,17 @@
   {
    "fieldname": "column_break_10",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sold_by",
+   "fieldtype": "Link",
+   "label": "Sold by",
+   "options": "Sold By"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-06-25 02:26:46.103241",
+ "modified": "2021-09-24 14:48:21.758785",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Vehicle",
