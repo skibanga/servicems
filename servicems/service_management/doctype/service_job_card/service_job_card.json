@@ -17,6 +17,7 @@
   "service_item_doctype",
   "service_item_name",
   "customer",
+  "mobile_no",
   "vehicle_model",
   "column_break_11",
   "make",
@@ -257,13 +258,20 @@
    "fieldname": "route",
    "fieldtype": "Data",
    "label": "Route"
+  },
+  {
+   "fetch_from": "customer.mobile_no",
+   "fieldname": "mobile_no",
+   "fieldtype": "Data",
+   "label": "Mobile No",
+   "read_only": 1
   }
  ],
  "has_web_view": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-07-28 19:11:48.131262",
+ "modified": "2021-10-06 10:23:09.637268",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",

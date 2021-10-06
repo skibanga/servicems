@@ -8,6 +8,8 @@
  "field_order": [
   "registration_number",
   "customer",
+  "column_break_3",
+  "mobile_no",
   "section_break_3",
   "vehicle_model",
   "column_break_5",
@@ -89,11 +91,22 @@
    "fieldtype": "Link",
    "label": "Sold by",
    "options": "Sold By"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "customer.mobile_no",
+   "fieldname": "mobile_no",
+   "fieldtype": "Data",
+   "label": "Mobile No",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-09-24 14:48:21.758785",
+ "modified": "2021-10-06 10:16:42.467202",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Vehicle",
