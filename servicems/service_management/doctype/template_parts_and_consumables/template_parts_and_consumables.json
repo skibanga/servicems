@@ -5,22 +5,12 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "part_name",
   "item",
   "type",
   "qty",
   "is_billable"
  ],
  "fields": [
-  {
-   "fetch_from": "name_of_part_and_consumable.part_name",
-   "fieldname": "part_name",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Part Name",
-   "options": "Parts and Consumable",
-   "reqd": 1
-  },
   {
    "fetch_from": "part_name.type",
    "fieldname": "type",
@@ -44,19 +34,18 @@
    "reqd": 1
   },
   {
-   "fetch_from": "part_name.item",
    "fieldname": "item",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Item",
    "options": "Item",
-   "read_only": 1,
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-06-30 13:25:13.658689",
+ "modified": "2021-10-11 17:04:15.749435",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Template Parts and Consumables",

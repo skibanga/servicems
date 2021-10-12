@@ -1,4 +1,5 @@
 {
+ "_liked_by": "[\"av-dev1@aakvatech.com\"]",
  "actions": [],
  "creation": "2021-06-24 10:04:05.742941",
  "doctype": "DocType",
@@ -6,7 +7,8 @@
  "engine": "InnoDB",
  "field_order": [
   "default_is_billable",
-  "price_list"
+  "price_list",
+  "item_group_for_parts_and_consumable"
  ],
  "fields": [
   {
@@ -22,12 +24,18 @@
    "label": "Default Price List",
    "options": "Price List",
    "reqd": 1
+  },
+  {
+   "fieldname": "item_group_for_parts_and_consumable",
+   "fieldtype": "Table MultiSelect",
+   "label": "Item Group for Parts and Consumable",
+   "options": "Part and Consumable Item Group"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-06-30 13:56:57.334323",
+ "modified": "2021-10-12 08:38:34.510469",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Settings",

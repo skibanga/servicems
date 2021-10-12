@@ -4,8 +4,6 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "part_name",
-  "type",
   "item",
   "qty",
   "rate",
@@ -13,21 +11,6 @@
  ],
  "fields": [
   {
-   "fieldname": "part_name",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Part Name",
-   "options": "Parts and Consumable",
-   "reqd": 1
-  },
-  {
-   "fetch_from": "part_name.type",
-   "fieldname": "type",
-   "fieldtype": "Data",
-   "label": "Type"
-  },
-  {
-   "fetch_from": "part_name.item",
    "fieldname": "item",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -59,7 +42,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-06-25 17:10:49.850086",
+ "modified": "2021-10-11 16:57:15.969078",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Job Card Items Supplied",
