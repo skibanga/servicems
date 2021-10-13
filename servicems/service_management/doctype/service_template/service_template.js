@@ -2,7 +2,11 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Service Template', {
-	// refresh: function(frm) {
-
-	// }
+	refresh: function (frm) {
+		cur_frm.set_query("item", "parts", () => {
+			return {
+				query: "servicems.service_management.doctype.service_settings.service_settings.get_filtered_items",
+			};
+		});
+	},
 });

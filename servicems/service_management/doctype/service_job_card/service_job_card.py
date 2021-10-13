@@ -9,7 +9,8 @@ from frappe.utils import nowdate, nowtime
 
 class ServiceJobCard(WebsiteGenerator):
     def validate(self):
-        self.update_tabels()
+        self.update_tables()
+        self.set_parts_rate()
         self.set_totals()
         self.vaildate_complete()
 
@@ -21,33 +22,32 @@ class ServiceJobCard(WebsiteGenerator):
         if self.status != "Completed":
             frappe.throw(_("It is not allowed to submit if it is not completed"))
 
-    def update_tabels(self):
-        for temp in self.services:
-            if not temp.check_billable:
-                temp.is_billable = frappe.get_value(
-                    "Service Template", temp.service, "is_billable"
+    def update_tables(self):
+        for template in self.services:
+            if not template.bypass_billable:
+                template.is_billable = frappe.get_value(
+                    "Service Template", template.service, "is_billable"
                 )
-            if not temp.applied:
-                temp_doc = frappe.get_doc("Service Template", temp.service)
-                if temp_doc.tasks:
-                    for task in temp_doc.tasks:
+            if not template.applied:
+                template_doc = frappe.get_doc("Service Template", template.service)
+                if template_doc.tasks:
+                    for task in template_doc.tasks:
                         row = self.append("tasks", {})
                         row.task_name = task.task_name
-                        row.template = temp_doc.name
+                        row.template = template_doc.name
 
-                if temp_doc.parts:
-                    for part in temp_doc.parts:
+                if template_doc.parts:
+                    for part in template_doc.parts:
                         row = self.append("parts", {})
                         row.item = part.item
                         row.qty = part.qty
                         row.rate = get_item_price(
                             part.item,
-                            self.get_price_list(temp_doc.price_list),
+                            self.get_price_list(template_doc.price_list),
                             self.company,
                         )
                         row.is_billable = part.is_billable
-
-                temp.applied = 1
+                template.applied = 1
 
     def set_totals(self):
         self.service_charges = 0
@@ -55,22 +55,28 @@ class ServiceJobCard(WebsiteGenerator):
         self.total = 0
 
         if self.services:
-            for el in self.services:
-                el.rate = get_item_price(
-                    el.item, self.get_price_list(el.price_list), self.company
+            for service in self.services:
+                service.rate = get_item_price(
+                    service.item, self.get_price_list(service.price_list), self.company
                 )
-                if el.is_billable:
-                    self.service_charges += el.rate
+                if service.is_billable:
+                    self.service_charges += service.rate
         if self.parts:
-            for el in self.parts:
-                if el.is_billable:
-                    self.spares_cost += el.rate * el.qty
-        if self.supplied_patrs:
-            for el in self.supplied_patrs:
-                if el.is_billable:
-                    self.spares_cost += el.rate * el.qty
+            for part in self.parts:
+                if part.is_billable:
+                    self.spares_cost += part.rate * part.qty
+        if self.supplied_parts:
+            for supplied_part in self.supplied_parts:
+                if supplied_part.is_billable:
+                    self.spares_cost += supplied_part.rate * supplied_part.qty
 
         self.total = self.service_charges + self.spares_cost
+
+    def set_parts_rate(self):
+        price_list = self.get_price_list()
+        for item in self.parts:
+            if not item.rate:
+                item.rate = get_item_price(item.item, price_list, self.company)
 
     @frappe.whitelist()
     def create_stock_entry(self, type):
@@ -190,10 +196,10 @@ class ServiceJobCard(WebsiteGenerator):
         if not completed:
             frappe.throw(_("The Tasks is not Completed"))
 
-    def get_price_list(self, temp_price_list=None):
+    def get_price_list(self, template_price_list=None):
         price_list = frappe.get_value("Customer", self.customer, "default_price_list")
-        if not price_list and temp_price_list:
-            price_list = temp_price_list
+        if not price_list and template_price_list:
+            price_list = template_price_list
         if not price_list:
             price_list = frappe.get_value(
                 "Service Settings", "Service Settings", "price_list"
@@ -215,5 +221,5 @@ def get_item_price(item_code, price_list, company):
         order_by="valid_from desc",
     )
     if len(item_prices_data):
-        price = item_prices_data[0].price_list_rate
+        price = item_prices_data[0].price_list_rate or 0
     return price

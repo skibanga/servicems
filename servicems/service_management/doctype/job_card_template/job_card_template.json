@@ -9,7 +9,7 @@
   "item",
   "rate",
   "is_billable",
-  "check_billable",
+  "bypass_billable",
   "applied",
   "price_list"
  ],
@@ -60,7 +60,7 @@
   },
   {
    "default": "0",
-   "fieldname": "check_billable",
+   "fieldname": "bypass_billable",
    "fieldtype": "Check",
    "label": "Bypass Billable"
   }
@@ -68,7 +68,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-09-23 22:10:38.754553",
+ "modified": "2021-10-13 12:22:27.542891",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Job Card Template",

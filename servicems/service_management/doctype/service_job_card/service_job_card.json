@@ -34,7 +34,7 @@
   "tasks",
   "section_break_26",
   "parts",
-  "supplied_patrs",
+  "supplied_parts",
   "section_break_31",
   "invoice",
   "column_break_38",
@@ -233,13 +233,6 @@
    "options": "Job Card Items Supplied"
   },
   {
-   "fieldname": "supplied_patrs",
-   "fieldtype": "Table",
-   "label": "Supplied Patrs",
-   "options": "Supplied Parts",
-   "read_only": 1
-  },
-  {
    "fieldname": "tasks",
    "fieldtype": "Table",
    "label": "Task",
@@ -265,13 +258,20 @@
    "fieldtype": "Data",
    "label": "Mobile No",
    "read_only": 1
+  },
+  {
+   "fieldname": "supplied_parts",
+   "fieldtype": "Table",
+   "label": "Supplied Parts",
+   "options": "Supplied Parts",
+   "read_only": 1
   }
  ],
  "has_web_view": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-10-11 16:56:03.931806",
+ "modified": "2021-10-13 12:38:28.464075",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",
