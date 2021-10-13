@@ -8,7 +8,7 @@
  "field_order": [
   "default_is_billable",
   "price_list",
-  "item_group_for_parts_and_consumable"
+  "item_groups"
  ],
  "fields": [
   {
@@ -26,7 +26,7 @@
    "reqd": 1
   },
   {
-   "fieldname": "item_group_for_parts_and_consumable",
+   "fieldname": "item_groups",
    "fieldtype": "Table MultiSelect",
    "label": "Item Group for Parts and Consumable",
    "options": "Part and Consumable Item Group"
@@ -35,7 +35,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-10-12 08:38:34.510469",
+ "modified": "2021-10-13 03:12:35.181653",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Settings",

@@ -38,9 +38,7 @@ class ServiceJobCard(WebsiteGenerator):
                 if temp_doc.parts:
                     for part in temp_doc.parts:
                         row = self.append("parts", {})
-                        row.part_name = part.part_name
                         row.item = part.item
-                        row.type = part.type
                         row.qty = part.qty
                         row.rate = get_item_price(
                             part.item,
@@ -116,9 +114,7 @@ class ServiceJobCard(WebsiteGenerator):
             for row in self.parts:
                 if row.qty > 0:
                     new_row = self.append("supplied_patrs", {})
-                    new_row.part_name = row.part_name
                     new_row.item = row.item
-                    new_row.type = row.type
                     new_row.qty = row.qty
                     new_row.rate = row.rate
                     new_row.is_billable = row.is_billable
