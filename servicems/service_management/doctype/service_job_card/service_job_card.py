@@ -119,7 +119,7 @@ class ServiceJobCard(WebsiteGenerator):
             left_parts = []
             for row in self.parts:
                 if row.qty > 0:
-                    new_row = self.append("supplied_patrs", {})
+                    new_row = self.append("supplied_parts", {})
                     new_row.item = row.item
                     new_row.qty = row.qty
                     new_row.rate = row.rate
