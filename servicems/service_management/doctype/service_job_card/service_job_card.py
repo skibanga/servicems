@@ -147,8 +147,8 @@ class ServiceJobCard(WebsiteGenerator):
                         "rate": item.rate if item.is_billable else 0,
                     }
                 )
-        if self.supplied_patrs and len(self.supplied_parts) > 0:
-            for item in self.supplied_patrs:
+        if self.supplied_parts and len(self.supplied_parts) > 0:
+            for item in self.supplied_parts:
                 items.append(
                     {
                         "item_code": item.item,
