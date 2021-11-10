@@ -216,8 +216,9 @@
   },
   {
    "fieldname": "invoice",
-   "fieldtype": "Data",
-   "label": "Invoice Number"
+   "fieldtype": "Link",
+   "label": "Invoice Number",
+   "options": "Sales Invoice"
   },
   {
    "fieldname": "services",
@@ -270,8 +271,13 @@
  "has_web_view": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2021-10-13 12:38:28.464075",
+ "links": [
+  {
+   "link_doctype": "Sales Invoice",
+   "link_fieldname": "service_job_card"
+  }
+ ],
+ "modified": "2021-11-09 10:09:59.138305",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",

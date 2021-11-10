@@ -1,0 +1,18 @@
+[
+    {
+        "name": "Sales Invoice-service_job_card",
+        "owner": "Administrator",
+        "creation": "2021-11-09 10:06:46.774505",
+        "modified": "2021-11-09 10:06:46.774505",
+        "modified_by": "Administrator",
+        "idx": 193,
+        "dt": "Sales Invoice",
+        "label": "Service Job Card",
+        "fieldname": "service_job_card",
+        "insert_after": "campaign",
+        "fieldtype": "Link",
+        "precision": "",
+        "options": "Service Job Card",
+        "doctype": "Custom Field"
+    }
+]

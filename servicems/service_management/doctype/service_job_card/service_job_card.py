@@ -169,6 +169,7 @@ class ServiceJobCard(WebsiteGenerator):
                     posting_date=date,
                     due_date=date,
                     update_stock=1,
+                    service_job_card = self.name,
                     company=self.company,
                     ignore_pricing_rule=1,
                     set_warehouse=workshop.workshop_warehouse,
