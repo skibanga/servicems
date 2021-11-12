@@ -106,6 +106,7 @@ class ServiceJobCard(WebsiteGenerator):
                     stock_entry_type="Material Transfer",
                     purpose="Material Transfer",
                     company=self.company,
+                    service_job_card = self.name,
                     from_warehouse=workshop.parts_warehouse,
                     to_warehouse=workshop.workshop_warehouse,
                     items=items,
