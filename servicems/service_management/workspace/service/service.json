@@ -140,6 +140,23 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Inspection",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Pre Inspection Template",
+   "link_to": "Service Pre Inspection Template",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Settings",
    "link_type": "DocType",
    "onboard": 0,
@@ -155,7 +172,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-09-24 14:50:43.577882",
+ "modified": "2021-11-29 12:56:29.497605",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service",
