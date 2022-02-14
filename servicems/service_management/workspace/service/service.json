@@ -157,6 +157,24 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Reports",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Service Job Card Detail",
+   "link_to": "Service Job Card Detail",
+   "link_type": "Report",
+   "onboard": 0,
+   "only_for": "",
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Settings",
    "link_type": "DocType",
    "onboard": 0,
@@ -172,7 +190,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-11-29 12:56:29.497605",
+ "modified": "2022-02-14 20:41:14.483822",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service",
