@@ -58,7 +58,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
-   "options": "Initiated\nActive\nInspection\nRepairing\nAwaiting Parts\nCompleted\nClosed",
+   "options": "Initiated\nLaw Active\nInspection\nRepairing\nAwaiting Parts\nCompleted\nClosed",
    "reqd": 1
   },
   {
@@ -93,7 +93,7 @@
    "fieldname": "service_item_name",
    "fieldtype": "Link",
    "label": "Service Item Name",
-   "options": "Service Item",
+   "options": "Service Vehicle",
    "reqd": 1
   },
   {
@@ -283,7 +283,7 @@
    "link_fieldname": "service_job_card"
   }
  ],
- "modified": "2022-02-11 16:13:29.434967",
+ "modified": "2022-02-14 20:32:09.690679",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",
