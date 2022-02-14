@@ -35,6 +35,7 @@
   "section_break_26",
   "parts",
   "supplied_parts",
+  "unbill_item",
   "section_break_31",
   "invoice",
   "column_break_38",
@@ -266,6 +267,11 @@
    "label": "Supplied Parts",
    "options": "Supplied Parts",
    "read_only": 1
+  },
+  {
+   "fieldname": "unbill_item",
+   "fieldtype": "Button",
+   "label": "Unbill Item"
   }
  ],
  "has_web_view": 1,
@@ -277,7 +283,7 @@
    "link_fieldname": "service_job_card"
   }
  ],
- "modified": "2021-11-09 10:09:59.138305",
+ "modified": "2022-02-14 11:34:11.986109",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",
