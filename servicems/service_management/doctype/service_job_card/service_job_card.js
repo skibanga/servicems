@@ -17,12 +17,6 @@ frappe.ui.form.on('Service Job Card', {
 
 	unbill_item: function (frm) {
 		if (frm.doc.docstatus == 0) {
-			frappe.msgprint({
-				title: __('Notification'),
-				indicator: 'orange',
-				message: __('Service Job Card is not Submitted')
-			});
-		} else{
 			let d = new frappe.ui.Dialog({
 				title: "Select Item to Unbill",
 				fields: [
