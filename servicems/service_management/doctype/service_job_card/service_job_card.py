@@ -5,6 +5,7 @@ import frappe
 from frappe.website.website_generator import WebsiteGenerator
 from frappe import _
 from frappe.utils import nowdate, nowtime
+import json
 
 
 class ServiceJobCard(WebsiteGenerator):
@@ -225,3 +226,66 @@ def get_item_price(item_code, price_list, company):
     if len(item_prices_data):
         price = item_prices_data[0].price_list_rate or 0
     return price
+
+@frappe.whitelist()
+def get_selected_items(items):
+    selected_items = json.loads(items)
+
+    if selected_items:
+        doc = frappe.get_doc(selected_items[0]["parenttype"], selected_items[0]["parent"])
+        source_doc = frappe.get_doc("Stock Entry", selected_items[0]["stock_entry"])
+
+        new_doc = frappe.new_doc("Stock Entry")
+        new_doc.company = source_doc.company
+        new_doc.stock_entry_type = source_doc.stock_entry_type
+        new_doc.purpose = source_doc.purpose
+        new_doc.posting_date = nowdate() 
+        new_doc.posting_time = nowtime()
+        new_doc.from_warehouse = source_doc.to_warehouse
+        new_doc.to_warehouse = source_doc.from_warehouse
+        new_doc.is_return = 1
+        new_doc.service_job_card = doc.name
+
+        for item in selected_items:
+            for entry in source_doc.items:
+                if item.get("item") == entry.item_code:
+                    new_doc.append("items", {
+                        "s_warehouse": entry.t_warehouse,
+                        "t_warehouse": entry.s_warehouse,
+                        "item_code": item.get("item"),
+                        "item_name": entry.item_name,
+                        "description": entry.description,
+                        "item_group": entry.item_group,
+                        "qty": item.get("qty"),
+                        "transfer_qty": entry.transfer_qty,
+                        "uom": entry.uom,
+                        "stock_uom": entry.stock_uom,
+                        "conversion_factor": entry.conversion_factor,
+                        "expense_account": entry.expense_account,
+                        "basic_rate": item.get("rate"),
+                        "basic_amount": item.get("rate"),
+                        "amount": item.get("rate"),
+                        "cost_center": entry.cost_center
+                    })
+        new_doc.save(ignore_permissions=True)
+        new_doc.submit()
+        if new_doc.get("name"):
+            updated_supplied_parts(doc, selected_items, new_doc.get("name"))
+            frappe.msgprint("Stock Entry: {0} Created Successfully".format(
+                frappe.bold(new_doc.name)
+            ))
+        else:
+            frappe.throw("Stock Entry was not created, try again")
+    
+    return new_doc.get("name")
+
+def updated_supplied_parts(doc, selected_items, name):
+    for row in doc.supplied_parts:
+        if not row.is_billable:
+            continue
+        for d in selected_items:
+            if row.item == d["item"]:
+                row.is_billable = 0
+                row.is_return = 1
+                row.return_stock_enty = name
+                row.db_update()

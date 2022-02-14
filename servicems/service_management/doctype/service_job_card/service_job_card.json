@@ -93,7 +93,7 @@
    "fieldname": "service_item_name",
    "fieldtype": "Link",
    "label": "Service Item Name",
-   "options": "Service Vehicle",
+   "options": "Service Item",
    "reqd": 1
   },
   {
@@ -283,7 +283,7 @@
    "link_fieldname": "service_job_card"
   }
  ],
- "modified": "2022-02-14 11:34:11.986109",
+ "modified": "2022-02-11 16:13:29.434967",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",

@@ -1,6 +1,4 @@
 {
- "_comments": "[]",
- "_liked_by": "[]",
  "actions": [],
  "creation": "2021-06-25 19:29:58.986551",
  "doctype": "DocType",
@@ -10,7 +8,10 @@
   "qty",
   "rate",
   "is_billable",
-  "stock_entry"
+  "stock_entry",
+  "column_break_1",
+  "is_return",
+  "return_stock_enty"
  ],
  "fields": [
   {
@@ -35,6 +36,7 @@
    "label": "Rate"
   },
   {
+   "allow_on_submit": 1,
    "default": "0",
    "fieldname": "is_billable",
    "fieldtype": "Check",
@@ -42,17 +44,38 @@
    "label": "Is billable"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "stock_entry",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Stock Entry",
-   "options": "Stock Entry"
+   "options": "Supplied Parts"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "is_return",
+   "fieldtype": "Check",
+   "label": "Is Return",
+   "read_only": 1
+  },
+  {
+   "fieldname": "return_stock_enty",
+   "fieldtype": "Link",
+   "label": "Return Stock Entry",
+   "options": "Stock Entry",
+   "read_only": 1,
+   "report_hide": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-10-11 16:56:31.429981",
+ "modified": "2022-02-11 23:28:30.194179",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Supplied Parts",
