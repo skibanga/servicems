@@ -118,20 +118,21 @@ class ServiceJobCard(WebsiteGenerator):
             doc.submit()
             frappe.msgprint(_("Stock Entry Created {0}").format(doc.name), alert=True)
 
-            left_parts = []
-            for row in self.parts:
-                if row.qty > 0:
-                    new_row = self.append("supplied_parts", {})
-                    new_row.item = row.item
-                    new_row.qty = row.qty
-                    new_row.rate = row.rate
-                    new_row.is_billable = row.is_billable
-                    new_row.stock_entry = doc.name
-                else:
-                    left_parts.append(row)
-            self.parts = left_parts
-            if type == "call":
-                self.save()
+            if doc.get("name"):
+                left_parts = []
+                for row in self.parts:
+                    if row.qty > 0:
+                        new_row = self.append("supplied_parts", {})
+                        new_row.item = row.item
+                        new_row.qty = row.qty
+                        new_row.rate = row.rate
+                        new_row.is_billable = row.is_billable
+                        new_row.stock_entry = doc.name
+                    else:
+                        left_parts.append(row)
+                self.parts = left_parts
+                if type == "call":
+                    self.save()
 
     def create_invoice(self):
         if self.status != "Completed":
@@ -276,8 +277,6 @@ def get_selected_items(items):
             ))
         else:
             frappe.throw("Stock Entry was not created, try again")
-    
-    return new_doc.get("name")
 
 def updated_supplied_parts(doc, selected_items, name):
     for row in doc.supplied_parts:
@@ -288,4 +287,4 @@ def updated_supplied_parts(doc, selected_items, name):
                 row.is_billable = 0
                 row.is_return = 1
                 row.return_stock_enty = name
-                row.db_update()
+    doc.save()
