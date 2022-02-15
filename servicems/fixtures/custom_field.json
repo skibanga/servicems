@@ -14,5 +14,21 @@
         "precision": "",
         "options": "Service Job Card",
         "doctype": "Custom Field"
+    },
+    {
+        "name": "Stock Entry-service_job_card",
+        "owner": "Administrator",
+        "creation": "2021-11-10 12:53:59.700377",
+        "modified": "2021-11-10 12:53:59.700377",
+        "modified_by": "Administrator",
+        "idx": 81,
+        "dt": "Stock Entry",
+        "label": "Service Job Card",
+        "fieldname": "service_job_card",
+        "insert_after": "remarks",
+        "fieldtype": "Link",
+        "options": "Service Job Card",
+        "read_only": 1,
+        "doctype": "Custom Field"
     }
 ]
