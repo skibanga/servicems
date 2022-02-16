@@ -46,9 +46,8 @@ frappe.ui.form.on('Service Job Card', {
 					$results.append(make_list_ofrows(columns, true));
 					for (let i = 0; i < records.length; i++) {
 						$results.append(make_list_ofrows(columns, true, records[i]))
-					}
+					};
 				}
-
 			});
 
 			$wrapper = d.fields_dict.open_space.$wrapper.append(`<div class="results" 
@@ -71,7 +70,7 @@ frappe.ui.form.on('Service Job Card', {
 					frappe.call("servicems.service_management.doctype.service_job_card.service_job_card.get_selected_items", {
 						items: checked_items
 					}).then(r => {
-
+						frm.reload_doc()
 					})
 					d.hide();
 				}
