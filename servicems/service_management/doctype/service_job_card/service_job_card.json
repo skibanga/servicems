@@ -271,7 +271,8 @@
   {
    "fieldname": "unbill_item",
    "fieldtype": "Button",
-   "label": "Unbill Item"
+   "label": "Unbill Item",
+   "permlevel": 1
   }
  ],
  "has_web_view": 1,
@@ -283,7 +284,7 @@
    "link_fieldname": "service_job_card"
   }
  ],
- "modified": "2022-02-14 20:32:09.690679",
+ "modified": "2022-02-18 09:39:32.687669",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",
