@@ -17,20 +17,6 @@ frappe.ui.form.on('Service Job Card', {
 
 	unbill_item: function (frm) {
 		if (frm.doc.docstatus == 0) {
-			let d = new frappe.ui.Dialog({
-				title: "Select Item to Unbill",
-				fields: [
-					{
-						fieldname: "open_space",
-						fieldtype: "HTML"
-					}
-				]
-			});
-			var $wrapper;
-			var $results;
-			var $placeholder;
-			var columns = ["item", "qty", "rate", "stock_entry"];
-
 			var parent = frm.doc.name;
 			frappe.db.get_list("Supplied Parts", {
 				fields: ["item", "qty", "rate", "stock_entry", "parent", "parenttype"],
@@ -41,41 +27,100 @@ frappe.ui.form.on('Service Job Card', {
 				}
 			}).then(records => {
 				if (!records){
-					$results.append($placeholder)
 				} else {
-					$results.append(make_list_ofrows(columns, true));
-					for (let i = 0; i < records.length; i++) {
-						$results.append(make_list_ofrows(columns, true, records[i]))
-					};
-				}
-			});
+					let d = new frappe.ui.Dialog({
+						title: "Select Item to Unbill",
+						fields: [
+							{
+								fieldname: "open_space",
+								fieldtype: "HTML",
+								width: "1300px"
+							}
+						],
 
-			$wrapper = d.fields_dict.open_space.$wrapper.append(`<div class="results" 
-				style="border: 1px solid #d1d8dd; border-radius: 3px; width 800px; height: 400px; overflow: auto;"></div>`);
-			$results = $wrapper.find('.results');
-			$placeholder = $(`<div class="multiselect-empty-state">
-						<span class="text-center" style="margin-top: -40px;">
-							<i class="fa fa-2x fa-heartbeat text-extra-muted"></i>
-							<p class="text-extra-muted">No Items found</p>
-						</span>
-					</div>`);
-			$results.on('click', '.list-item--head :checkbox', (e) => {
-				$results.find('.list-item-container .list-row-check')
-					.prop("checked", ($(e.target).is(':checked')));
-			});
+					});
+					
+					let html = `<table class="table table-hover" style="width:100%;">
+						<colgroup>
+							<col width="6%">
+							<col width="35%">
+							<col width="5%">
+							<col width="15%">
+							<col width="5%">
+							<col width="12%">
+							<col width="5%">
+							<col width="15%">
+						</colgroup>
+						<tr style="background-color: #D3D3D3;">
+							<th></th>
+							<th>Item</th>
+							<th></th>
+							<th>Rate</th>
+							<th></th>
+							<th>Qty</th>
+							<th></th>
+							<th>Qty to Return</th>
+						</tr>`
+					
+					records.forEach(row => {
+						html += `<tr>
+							<td><input type="checkbox"/></td>
+							<td id="item" data-item="${row.item}">${row.item}</td>
+							<td id="stock_entry" data-stock_entry="${row.stock_entry}"></td>
+							<td id="rate" data-rate="${row.rate}">${row.rate}</td>
+							<td id="parent" data-parent="${row.parent}"></td>
+							<td id="qty" data-qty="${row.qty}">${row.qty}</td>
+							<td id="parenttype" data-parenttype="${row.parenttype}"></td>
+							<td id="qty_to_return"></td>
+						</tr>`
+					});
+					html += `</table>`
 
-			d.set_primary_action(__('Select Item'), function () {
-				let checked_items = get_checked_lrpt_items($results);
-				if (checked_items.length > 0) {
-					frappe.call("servicems.service_management.doctype.service_job_card.service_job_card.get_selected_items", {
-						items: checked_items
-					}).then(r => {
-						frm.reload_doc()
-					})
-					d.hide();
-				}
+					let wrapper = d.fields_dict.open_space.$wrapper
+					
+					wrapper.html(html);
+
+					wrapper.find("table").hover(function() {
+						get_qty_to_return(wrapper);
+					});
+					
+					d.set_primary_action(__("Select Item"), function() {
+						let items = [];
+						
+						wrapper.find('tr:has(input:checkbox:checked)').each(function() {
+							items.push({
+								"item":  $(this).find("#item").attr("data-item"),
+								"stock_entry": $(this).find("#stock_entry").attr("data-stock_entry"),
+								"rate": $(this).find("#rate").attr("data-rate"),
+								"parent": $(this).find("#parent").attr("data-parent"),
+								"qty": $(this).find("#qty").attr("data-qty"),
+								"parenttype": $(this).find("#parenttype").attr("data-parenttype"),
+								"qty_to_return": $(this).find("#parenttype").attr("data-qty_to_return")
+							});
+						});
+
+						if (items.length > 0) {
+							frappe.call("servicems.service_management.doctype.service_job_card.service_job_card.get_selected_items", {
+								items: items
+							}).then(r => {
+								frm.reload_doc()
+							});
+							d.hide();
+						} else {
+							frappe.msgprint({
+								title: __('Message'),
+								indicator: 'red',
+								message: __(
+									'<h4 class="text-center" style="background-color: #D3D3D3; font-weight: bold;">\
+									No any Item selected<h4>'
+								)
+							});
+						}
+					});
+					
+					d.show();
+				};
 			});
-			d.show()
 		}
 	}
 });
@@ -102,57 +147,39 @@ const createStockEntry = async function (frm) {
 		});
 };
 
-var make_list_ofrows = function (columns, item, result = {}) {
-	var me = this;
-	let head = Object.keys(result).length === 0;
-	let contents = ``;
-	columns.forEach(function (column) {
-		contents += `<div class="list-item__content ellipsis">
-			${head ? `<span class="ellipsis"><b>${__(frappe.model.unscrub(column))}</b></span>`
+var get_qty_to_return = function(wrapper) {
+	$.each(wrapper.find("tr:has(input:checkbox)"), function(index, row) {
+		$(this).on("click", "input:checkbox", function() {
+			if ($("input:checkbox").is(":checked") == true) {
+				if ($(this).parent().siblings().last().html() == "") {
+					$("<input type='number' id='return' style='border: 3px solid red'>")
+					.appendTo($(this).parent().siblings().last());
 
-				: (column !== "name" ? `<span class="ellipsis">${__(result[column])}</span>`
-					: `<a class="list-id ellipsis">${__(result[column])}</a>`)
+					$("#return").on("input", function() {
+						let row_qty = $(this).parent().siblings().eq(-2).text();
+
+						if ($("#return").val() <= row_qty) {
+							$(this).parent().siblings().last().attr("data-qty_to_return", $("#return").val());
+							$("#return").css("border", "1px solid blue");
+
+						} else {
+							$("#return").css({ "border": "4px solid red", "font-weight": "bold" }).val(0);
+							frappe.msgprint({
+								title: __('Message'),
+								indicator: 'red',
+								message: __(
+									'<h4 class="text-center" style="background-color: orange; font-weight: bold;">\
+									Qty to return cannot be greater than Qty<h4>'
+								)
+							});
+						};
+					});
+				}
+			} else {
+				if ($("input:checkbox").is(":checked") == false) {
+					$(this).parent().siblings().last().html("");
+				}
 			}
-		</div>`;
+		});
 	});
-
-	let $row = $(`<div class="list-item">
-		<div class="list-item__content" style="flex: 0 0 10px;">
-			<input type="checkbox" class="list-row-check" ${result.checked ? 'checked' : ''}>
-		</div>
-		${contents}
-	</div>`);
-
-	$row = list_rows(head, $row, result, item);
-	return $row;
-};
-
-var list_rows = function (head, $row, result, item) {
-	if (item) {
-		head ? $row.addClass('list-item--head')
-			: $row = $(`<div class="list-item-container"
-				data-item = "${result.item}"
-				data-qty = "${result.qty}"
-				data-rate = "${result.rate}"
-				data-stock_entry = "${result.stock_entry}"
-				data-parent = "${result.parent}"
-				data-parenttype = "${result.parenttype}"
-			</div>`).append($row);
-	}
-	return $row;
-};
-
-var get_checked_lrpt_items = function ($results) {
-	return $results.find('.list-item-container').map(function () {
-		let checked_items = {};
-		if ($(this).find(".list-row-check:checkbox:checked").length > 0) {
-			checked_items["item"] = $(this).attr("data-item");
-			checked_items["qty"] = $(this).attr("data-qty");
-			checked_items["rate"] = $(this).attr("data-rate");
-			checked_items["stock_entry"] = $(this).attr("data-stock_entry");
-			checked_items["parent"] = $(this).attr("data-parent");
-			checked_items["parenttype"] = $(this).attr("data-parenttype");
-			return checked_items;
-		}
-	}).get();
 };
