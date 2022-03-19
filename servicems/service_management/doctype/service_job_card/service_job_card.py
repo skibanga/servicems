@@ -4,7 +4,7 @@
 import frappe
 from frappe.website.website_generator import WebsiteGenerator
 from frappe import _
-from frappe.utils import nowdate, nowtime
+from frappe.utils import nowdate, nowtime, cint
 import json
 
 
@@ -248,6 +248,11 @@ def get_selected_items(items):
         new_doc.service_job_card = doc.name
 
         for item in selected_items:
+            if not item.get("qty_to_return"):
+                frappe.throw(_('<h4 class="text-center" style="background-color: yellow; font-weight: bold;">\
+                    Can not process stock entry for empty quantity to return<h4>'
+                ))
+
             for entry in source_doc.items:
                 if item.get("item") == entry.item_code:
                     new_doc.append("items", {
@@ -257,8 +262,8 @@ def get_selected_items(items):
                         "item_name": entry.item_name,
                         "description": entry.description,
                         "item_group": entry.item_group,
-                        "qty": item.get("qty"),
-                        "transfer_qty": entry.transfer_qty,
+                        "qty": item.get("qty_to_return"),
+                        "transfer_qty": item.get("qty_to_return"),
                         "uom": entry.uom,
                         "stock_uom": entry.stock_uom,
                         "conversion_factor": entry.conversion_factor,
@@ -268,6 +273,7 @@ def get_selected_items(items):
                         "amount": item.get("rate"),
                         "cost_center": entry.cost_center
                     })
+                    
         new_doc.save(ignore_permissions=True)
         new_doc.submit()
         if new_doc.get("name"):
@@ -284,7 +290,10 @@ def updated_supplied_parts(doc, selected_items, name):
             continue
         for d in selected_items:
             if row.item == d["item"]:
-                row.is_billable = 0
-                row.is_return = 1
+                row.qty_returned = d.get("qty_to_return")
+                row.qty = cint(d.get("qty")) - cint(d.get("qty_to_return"))
                 row.return_stock_enty = name
+                if (cint(d.get("qty")) - cint(d.get("qty_to_return"))) == 0:
+                    row.is_billable = 0
+                    row.is_return = 1
     doc.save()
