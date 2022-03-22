@@ -99,7 +99,6 @@ frappe.ui.form.on('Service Job Card', {
 						});
 
 						if (items.length > 0) {
-							console.log(items)
 							frappe.call("servicems.service_management.doctype.service_job_card.service_job_card.get_selected_items", {
 								items: items
 							}).then(r => {

@@ -294,9 +294,7 @@ def updated_supplied_parts(doc, selected_items, name):
                 row.qty = cint(d.get("qty")) - cint(d.get("qty_to_return"))
                 row.return_stock_enty = name
                 if (cint(d.get("qty")) - cint(d.get("qty_to_return"))) == 0:
-                    frappe.msgprint(str("yes"))
                     row.is_billable = 0
                     row.is_return = 1
     doc.save()
     doc.reload()
-    frappe.throw(str("Done"))
