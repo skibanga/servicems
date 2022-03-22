@@ -229,6 +229,7 @@
    "reqd": 1
   },
   {
+   "allow_bulk_edit": 1,
    "fieldname": "parts",
    "fieldtype": "Table",
    "label": "Parts and Consumable Supplied",
@@ -284,7 +285,7 @@
    "link_fieldname": "service_job_card"
   }
  ],
- "modified": "2022-02-18 09:39:32.687669",
+ "modified": "2022-03-22 15:06:37.371153",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",
