@@ -297,3 +297,4 @@ def updated_supplied_parts(doc, selected_items, name):
                     row.is_billable = 0
                     row.is_return = 1
     doc.save()
+    doc.reload()

@@ -26,8 +26,7 @@ frappe.ui.form.on('Service Job Card', {
 					is_return: 0
 				}
 			}).then(records => {
-				if (!records){
-				} else {
+				if (records.length > 0){
 					let d = new frappe.ui.Dialog({
 						title: "Select Item to Unbill",
 						fields: [
@@ -106,6 +105,7 @@ frappe.ui.form.on('Service Job Card', {
 								frm.reload_doc()
 							});
 							d.hide();
+
 						} else {
 							frappe.msgprint({
 								title: __('Message'),
@@ -119,6 +119,21 @@ frappe.ui.form.on('Service Job Card', {
 					});
 					
 					d.show();
+				
+				} else {
+					let d = new frappe.ui.Dialog({
+						title: "Select Items Unbill",
+						fields: [{fieldname: "html",fieldtype: "HTML"}]
+					});
+					d.fields_dict.html.$wrapper.append(`<div class="multiselect-empty-state"
+						style="border: 1px solid #d1d8dd; border-radius: 3px; height: 200px; overflow: auto;">
+						<span class="text-center" style="margin-top: -40px;">
+							<i class="fa fa-2x fa-heartbeat text-extra-muted"></i>
+							<p class="text-extra-muted text-center" style="font-size: 16px; font-weight: bold;">
+							No Item(s) to unbill</p>
+						</span>
+					</div>`);
+					d.show()
 				};
 			});
 		}
@@ -155,30 +170,30 @@ var get_qty_to_return = function(wrapper) {
 					$("<input type='number' id='return' style='border: 3px solid red'>")
 					.appendTo($(this).parent().siblings().last());
 
-					$("#return").on("input", function() {
+					$("#return").focusout("input", function() {
 						let row_qty = $(this).parent().siblings().eq(-2).text();
 
-						if ($("#return").val() <= row_qty) {
-							$(this).parent().siblings().last().attr("data-qty_to_return", $("#return").val());
+						if (parseInt($("#return").val()) <= parseInt(row_qty) && parseInt($("#return").val()) > 0) {
+							// store data to qty_to_return
+							$(this).parent().siblings().last().attr("data-qty_to_return", $("#return").val())
 							$("#return").css("border", "1px solid blue");
 
 						} else {
-							$("#return").css({ "border": "4px solid red", "font-weight": "bold" }).val(0);
+							$("#return").css({ "border": "4px solid red", "font-weight": "bold" }).val("");
 							frappe.msgprint({
 								title: __('Message'),
 								indicator: 'red',
 								message: __(
-									'<h4 class="text-center" style="background-color: orange; font-weight: bold;">\
-									Qty to return cannot be greater than Qty<h4>'
+									'<h4 class="text-center" style="background-color: orange; font-size: 13pt; font-weight: bold;">\
+									Qty to return cannot be Negative, cannot be Zero(0) or Empty<br>\
+									and cannot be greater than Qty<h4>'
 								)
 							});
 						};
 					});
 				}
 			} else {
-				if ($("input:checkbox").is(":checked") == false) {
-					$(this).parent().siblings().last().html("");
-				}
+				$(this).parent().siblings().last().html("");
 			}
 		});
 	});
