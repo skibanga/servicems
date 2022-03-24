@@ -17,9 +17,9 @@ frappe.query_reports["Service Job Card Detail"] = {
 			"reqd": 1
 		},
 		{
-			"fieldname": "summerize_view",
+			"fieldname": "customer_view",
 			"fieldtype": "Check",
-			"label": __("Summerized View")
+			"label": __("Customer View")
 		},
 	]
 };

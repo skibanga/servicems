@@ -164,7 +164,7 @@
   },
   {
    "hidden": 0,
-   "is_query_report": 0,
+   "is_query_report": 1,
    "label": "Service Job Card Detail",
    "link_to": "Service Job Card Detail",
    "link_type": "Report",
@@ -190,7 +190,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-02-14 20:41:14.483822",
+ "modified": "2022-03-24 12:36:40.817494",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service",
