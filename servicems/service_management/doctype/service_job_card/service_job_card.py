@@ -141,6 +141,9 @@ class ServiceJobCard(WebsiteGenerator):
         workshop = frappe.get_doc("Service Workshop", self.workshop)
         if self.services and len(self.services) > 0:
             for item in self.services:
+                if not item.is_billable:
+                    continue
+
                 items.append(
                     {
                         "item_code": item.item,
@@ -152,6 +155,9 @@ class ServiceJobCard(WebsiteGenerator):
                 )
         if self.supplied_parts and len(self.supplied_parts) > 0:
             for item in self.supplied_parts:
+                if not item.is_billable or item.is_return or item.qty == 0:
+                    continue
+
                 items.append(
                     {
                         "item_code": item.item,
