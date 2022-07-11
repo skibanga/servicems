@@ -19,11 +19,14 @@
   "customer",
   "mobile_no",
   "vehicle_model",
+  "driver_name",
+  "driver_mobile_number",
   "column_break_11",
   "make",
   "type",
   "engine_number",
   "chassis_number",
+  "odometer_reading",
   "section_break_11",
   "complains",
   "section_break_13",
@@ -58,7 +61,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
-   "options": "Initiated\nLaw Active\nInspection\nRepairing\nAwaiting Parts\nCompleted\nClosed",
+   "options": "Initiated\nActive\nInspection\nRepairing\nAwaiting Parts\nCompleted\nClosed",
    "reqd": 1
   },
   {
@@ -274,6 +277,22 @@
    "fieldtype": "Button",
    "label": "Unbill Item",
    "permlevel": 1
+  },
+  {
+   "fieldname": "driver_name",
+   "fieldtype": "Data",
+   "label": "Driver Name"
+  },
+  {
+   "fieldname": "driver_mobile_number",
+   "fieldtype": "Data",
+   "label": "Driver Mobile Number",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "odometer_reading",
+   "fieldtype": "Data",
+   "label": "Odometer Reading"
   }
  ],
  "has_web_view": 1,
@@ -285,7 +304,7 @@
    "link_fieldname": "service_job_card"
   }
  ],
- "modified": "2022-03-22 15:06:37.371153",
+ "modified": "2022-04-28 10:37:10.218014",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",
