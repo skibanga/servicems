@@ -223,6 +223,12 @@ class ServiceJobCard(WebsiteGenerator):
                         "rate": item.rate if item.is_billable else 0,
                     }
                 )
+            taxes = frappe.get_value(
+                "Sales Taxes and Charges Template",
+                {"company": self.company, "is_default": 1},
+                ["name", "tax_category"],
+                as_dict=1,
+            )
 
             if len(items) == 0:
                 return
@@ -239,11 +245,8 @@ class ServiceJobCard(WebsiteGenerator):
                     ignore_pricing_rule=1,
                     set_warehouse=workshop.workshop_warehouse,
                     items=items,
-                    taxes_and_charges=frappe.get_value(
-                        "Sales Taxes and Charges Template",
-                        {"company": self.company, "is_default": 1},
-                        "name",
-                    ),
+                    taxes_and_charges=taxes.name,
+                    tax_category=taxes.tax_category,
                 ),
             )
             frappe.flags.ignore_account_permission = True
