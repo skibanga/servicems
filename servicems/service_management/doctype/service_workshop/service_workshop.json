@@ -11,7 +11,9 @@
   "location",
   "column_break_4",
   "parts_warehouse",
-  "workshop_warehouse"
+  "workshop_warehouse",
+  "section_break_7",
+  "use_spare_not_item"
  ],
  "fields": [
   {
@@ -54,11 +56,21 @@
    "label": "Workshop Warehouse",
    "options": "Warehouse",
    "reqd": 1
+  },
+  {
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "use_spare_not_item",
+   "fieldtype": "Check",
+   "label": "Use Spare not Item"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-06-30 09:04:11.401784",
+ "modified": "2022-11-17 21:54:21.743098",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Workshop",

@@ -17,6 +17,7 @@
   "type",
   "sold_by",
   "section_break_8",
+  "vin",
   "engine_number",
   "column_break_10",
   "chassis_number"
@@ -102,11 +103,16 @@
    "fieldtype": "Data",
    "label": "Mobile No",
    "read_only": 1
+  },
+  {
+   "fieldname": "vin",
+   "fieldtype": "Data",
+   "label": "VIN"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-10-06 10:16:42.467202",
+ "modified": "2022-10-20 12:29:44.525540",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Vehicle",

@@ -9,6 +9,7 @@
  "field_order": [
   "status",
   "workshop",
+  "use_spare_not_item",
   "column_break_6",
   "receiving_datetime",
   "naming_series",
@@ -27,6 +28,7 @@
   "engine_number",
   "chassis_number",
   "odometer_reading",
+  "vin",
   "section_break_11",
   "complains",
   "section_break_13",
@@ -44,9 +46,62 @@
   "column_break_38",
   "service_charges",
   "spares_cost",
-  "total",
+  "total_excl_vat",
   "amended_from",
-  "route"
+  "route",
+  "section_break_41",
+  "service_book",
+  "cigar_lighter",
+  "first_aid",
+  "clock",
+  "gear_lock",
+  "tyre_stopper",
+  "tarpaulin",
+  "fog_lamps",
+  "column_break_44",
+  "fire_extinguisher",
+  "mobile_charger",
+  "cargo_belt",
+  "tool_kit",
+  "jock",
+  "pressure_pipe",
+  "helmet",
+  "section_break_43",
+  "battery_make",
+  "battery_no",
+  "battery_condition_column",
+  "excellent",
+  "good",
+  "poor",
+  "tyre_details_section",
+  "front_left",
+  "axle_1_rear_left",
+  "axle_2_rear_left",
+  "trailer_axle_left_1and2",
+  "trailer_axle_2_left_1and2",
+  "trailer_axle_3_left_1and2",
+  "spare_wheel_1",
+  "note_section",
+  "section_break_82",
+  "data_83",
+  "column_break_71",
+  "front_right",
+  "axle_1_rear_right",
+  "axle2_rear_right_t_1_and_2",
+  "trailer_axle_right_1_and_2",
+  "trailer_axle_2_right_1_and_2",
+  "trailer_axle_3_right_1_and_2",
+  "spare_wheel_2",
+  "section_break_83",
+  "driver_verbatin_column",
+  "text_83",
+  "service_advisor_instructor_column",
+  "section_break_89",
+  "parts_description",
+  "column_break_91",
+  "parts_no",
+  "column_break_93",
+  "total"
  ],
  "fields": [
   {
@@ -206,9 +261,8 @@
   },
   {
    "fieldname": "total",
-   "fieldtype": "Currency",
-   "label": "Total Excl. Vat",
-   "read_only": 1
+   "fieldtype": "Small Text",
+   "label": "Total"
   },
   {
    "fieldname": "column_break_38",
@@ -293,6 +347,316 @@
    "fieldname": "odometer_reading",
    "fieldtype": "Data",
    "label": "Odometer Reading"
+  },
+  {
+   "fieldname": "section_break_41",
+   "fieldtype": "Section Break",
+   "label": "Pre Acceptance Inspection"
+  },
+  {
+   "fieldname": "section_break_43",
+   "fieldtype": "Section Break",
+   "label": "Battery Details"
+  },
+  {
+   "fetch_from": "service_item_name.vin",
+   "fieldname": "vin",
+   "fieldtype": "Data",
+   "label": "VIN",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "service_book",
+   "fieldtype": "Check",
+   "label": "Service Book"
+  },
+  {
+   "fieldname": "column_break_44",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "fire_extinguisher",
+   "fieldtype": "Check",
+   "label": "Fire Extinguisher"
+  },
+  {
+   "fieldname": "battery_make",
+   "fieldtype": "Data",
+   "label": "Battery Make"
+  },
+  {
+   "fieldname": "battery_no",
+   "fieldtype": "Data",
+   "label": "Battery No"
+  },
+  {
+   "fieldname": "tyre_details_section",
+   "fieldtype": "Section Break",
+   "label": "Tyre Details"
+  },
+  {
+   "fieldname": "front_right",
+   "fieldtype": "Select",
+   "label": "Front Right",
+   "options": "\nAbove 10 mm\nAround 7 mm\nLess than 2.6 mm"
+  },
+  {
+   "fieldname": "front_left",
+   "fieldtype": "Select",
+   "label": "Front Left",
+   "options": "\nAbove 10 mm\nAround 7 mm\nLess than 2.6 mm"
+  },
+  {
+   "fieldname": "axle_1_rear_right",
+   "fieldtype": "Select",
+   "label": "AXLE 1 REAR RIGHT T 1 AND 2",
+   "options": "\nAbove 10 mm\nAround 7 mm\nLess than 2.6 mm"
+  },
+  {
+   "fieldname": "axle_1_rear_left",
+   "fieldtype": "Select",
+   "label": "AXLE 1 REAR LEFT T 1  AND 2",
+   "options": "\nAbove 10 mm\nAround 7 mm\nLess than 2.6 mm"
+  },
+  {
+   "fieldname": "axle_2_rear_left",
+   "fieldtype": "Select",
+   "label": "AXLE 2 REAR LEFT T 1 AND 2",
+   "options": "\nAbove 10 mm\nAround 7 mm\nLess than 2.6 mm"
+  },
+  {
+   "fieldname": "spare_wheel_1",
+   "fieldtype": "Select",
+   "label": "Spare Wheel 1",
+   "options": "\nAbove 10 mm\nAround 7 mm\nLess than 2.6 mm"
+  },
+  {
+   "fieldname": "spare_wheel_2",
+   "fieldtype": "Select",
+   "label": "Spare Wheel 2",
+   "options": "\nAbove 10 mm\nAround 7 mm\nLess than 2.6 mm"
+  },
+  {
+   "default": "0",
+   "fieldname": "cigar_lighter",
+   "fieldtype": "Check",
+   "label": "Cigar Lighter"
+  },
+  {
+   "default": "0",
+   "fieldname": "first_aid",
+   "fieldtype": "Check",
+   "label": "First aid"
+  },
+  {
+   "default": "0",
+   "fieldname": "clock",
+   "fieldtype": "Check",
+   "label": "Clock"
+  },
+  {
+   "default": "0",
+   "fieldname": "gear_lock",
+   "fieldtype": "Check",
+   "label": "Gear Lock"
+  },
+  {
+   "default": "0",
+   "fieldname": "tyre_stopper",
+   "fieldtype": "Check",
+   "label": "Tyre stopper"
+  },
+  {
+   "default": "0",
+   "fieldname": "tarpaulin",
+   "fieldtype": "Check",
+   "label": "Tarpaulin"
+  },
+  {
+   "default": "0",
+   "fieldname": "fog_lamps",
+   "fieldtype": "Check",
+   "label": "Fog Lamp"
+  },
+  {
+   "default": "0",
+   "fieldname": "mobile_charger",
+   "fieldtype": "Check",
+   "label": "Mobile Charger"
+  },
+  {
+   "default": "0",
+   "fieldname": "cargo_belt",
+   "fieldtype": "Check",
+   "label": "Cargo belt"
+  },
+  {
+   "default": "0",
+   "fieldname": "tool_kit",
+   "fieldtype": "Check",
+   "label": "Tool Kit"
+  },
+  {
+   "default": "0",
+   "fieldname": "jock",
+   "fieldtype": "Check",
+   "label": "Jock"
+  },
+  {
+   "default": "0",
+   "fieldname": "pressure_pipe",
+   "fieldtype": "Check",
+   "label": "Pressure pipe"
+  },
+  {
+   "default": "0",
+   "fieldname": "helmet",
+   "fieldtype": "Check",
+   "label": "Helmet"
+  },
+  {
+   "bold": 1,
+   "fieldname": "battery_condition_column",
+   "fieldtype": "Column Break",
+   "label": "Battery Condition"
+  },
+  {
+   "default": "0",
+   "fieldname": "excellent",
+   "fieldtype": "Check",
+   "label": "Excellent"
+  },
+  {
+   "default": "0",
+   "fieldname": "good",
+   "fieldtype": "Check",
+   "label": "Good"
+  },
+  {
+   "default": "0",
+   "fieldname": "poor",
+   "fieldtype": "Check",
+   "label": "Poor"
+  },
+  {
+   "fieldname": "note_section",
+   "fieldtype": "Read Only",
+   "label": "Note To Measure Tyre tread use Tread DepthGuage"
+  },
+  {
+   "bold": 1,
+   "fieldname": "driver_verbatin_column",
+   "fieldtype": "Small Text",
+   "label": "Driver Verbatin"
+  },
+  {
+   "fieldname": "service_advisor_instructor_column",
+   "fieldtype": "Small Text",
+   "label": "Service Advisor Instructor"
+  },
+  {
+   "fieldname": "text_83",
+   "fieldtype": "Column Break"
+  },
+  {
+   "bold": 1,
+   "fieldname": "section_break_82",
+   "fieldtype": "Heading",
+   "label": "Remark/Vehicles diagnosis report"
+  },
+  {
+   "fieldname": "section_break_83",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "data_83",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "column_break_71",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "trailer_axle_left_1and2",
+   "fieldtype": "Select",
+   "label": "TRAILER AXLE LEFT 1 AND 2",
+   "options": "\nAbove 10 mm\nAround 7 mm\nLess than 2.6 mm"
+  },
+  {
+   "fieldname": "trailer_axle_2_left_1and2",
+   "fieldtype": "Select",
+   "label": "TRAILER AXLE 2 LEFT 1 AND 2",
+   "options": "\nAbove 10 mm\nAround 7 mm\nLess than 2.6 mm"
+  },
+  {
+   "fieldname": "trailer_axle_3_left_1and2",
+   "fieldtype": "Select",
+   "label": "TRAILER AXLE 3 LEFT 1 AND 2",
+   "options": "\nAbove 10 mm\nAround 7 mm\nLess than 2.6 mm"
+  },
+  {
+   "fieldname": "axle2_rear_right_t_1_and_2",
+   "fieldtype": "Select",
+   "label": "AXLE2 REAR RIGHT T 1 AND 2",
+   "options": "\nAbove 10 mm\nAround 7 mm\nLess than 2.6 mm"
+  },
+  {
+   "fieldname": "trailer_axle_right_1_and_2",
+   "fieldtype": "Select",
+   "label": "TRAILER AXLE RIGHT 1 AND 2",
+   "options": "\nAbove 10 mm\nAround 7 mm\nLess than 2.6 mm"
+  },
+  {
+   "fieldname": "trailer_axle_2_right_1_and_2",
+   "fieldtype": "Select",
+   "label": "TRAILER AXLE 2 RIGHT 1 AND 2",
+   "options": "\nAbove 10 mm\nAround 7 mm\nLess than 2.6 mm"
+  },
+  {
+   "fieldname": "trailer_axle_3_right_1_and_2",
+   "fieldtype": "Select",
+   "label": "TRAILER AXLE 3 RIGHT 1 AND 2",
+   "options": "\nAbove 10 mm\nAround 7 mm\nLess than 2.6 mm"
+  },
+  {
+   "fieldname": "section_break_89",
+   "fieldtype": "Section Break",
+   "label": "Estimated Repair"
+  },
+  {
+   "bold": 1,
+   "fieldname": "parts_description",
+   "fieldtype": "Small Text",
+   "label": "Part Description"
+  },
+  {
+   "fieldname": "column_break_91",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "parts_no",
+   "fieldtype": "Small Text",
+   "label": "Part No"
+  },
+  {
+   "fieldname": "total_excl_vat",
+   "fieldtype": "Currency",
+   "label": "Total Excl. Vat",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_93",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fetch_from": "workshop.use_spare_not_item",
+   "fieldname": "use_spare_not_item",
+   "fieldtype": "Check",
+   "label": "Use Spare Not Item",
+   "read_only": 1
   }
  ],
  "has_web_view": 1,
@@ -304,7 +668,7 @@
    "link_fieldname": "service_job_card"
   }
  ],
- "modified": "2022-04-28 10:37:10.218014",
+ "modified": "2022-11-17 22:17:15.353788",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",
