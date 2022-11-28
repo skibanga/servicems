@@ -19,12 +19,14 @@ frappe.ui.form.on('Service Job Card', {
 		if (frm.doc.docstatus == 0) {
 			var parent = frm.doc.name;
 			frappe.db.get_list("Supplied Parts", {
-				fields: ["idx", "item", "spare", "qty", "rate", "stock_entry", "parent", "parenttype"],
+				fields: ["idx", "item", "item_name", "qty", "rate", "stock_entry", "parent", "parenttype"],
 				filters: {
 					parent: parent,
 					is_billable: 1,
 					is_return: 0
-				}
+				},
+				order_by: 'idx ASC',
+				page_length: 100
 			}).then(records => {
 				if (records.length > 0){
 					let d = new frappe.ui.Dialog({
@@ -43,8 +45,8 @@ frappe.ui.form.on('Service Job Card', {
 						<colgroup>
 							<col width="5%">
 							<col width="5%%">
-							<col width="25%">
-							<col width="10%">
+							<col width="20%">
+							<col width="15%">
 							<col width="5%">
 							<col width="15%">
 							<col width="5%">
@@ -56,7 +58,7 @@ frappe.ui.form.on('Service Job Card', {
 							<th></th>
 							<th>S/N</th>
 							<th>Item</th>
-							<th>Spare</th>
+							<th>Item Name</th>
 							<th></th>
 							<th>Rate</th>
 							<th></th>
@@ -70,7 +72,7 @@ frappe.ui.form.on('Service Job Card', {
 							<td><input type="checkbox"/></td>
 							<td id="idx" data-idx="${row.idx}">${row.idx}</td>
 							<td id="item" data-item="${row.item}">${row.item}</td>
-							<td id="spare" data-spare="${row.spare}">${row.spare}</td>
+							<td id="item_name" data-item_name="${row.item_name}">${row.item_name}</td>
 							<td id="stock_entry" data-stock_entry="${row.stock_entry}"></td>
 							<td id="rate" data-rate="${row.rate}">${row.rate}</td>
 							<td id="parent" data-parent="${row.parent}"></td>
@@ -95,7 +97,7 @@ frappe.ui.form.on('Service Job Card', {
 						wrapper.find('tr:has(input:checkbox:checked)').each(function() {
 							items.push({
 								"item":  $(this).find("#item").attr("data-item"),
-								"spare":  $(this).find("#spare").attr("data-spare"),
+								"item_name":  $(this).find("#item_name").attr("data-item_name"),
 								"stock_entry": $(this).find("#stock_entry").attr("data-stock_entry"),
 								"rate": $(this).find("#rate").attr("data-rate"),
 								"parent": $(this).find("#parent").attr("data-parent"),
