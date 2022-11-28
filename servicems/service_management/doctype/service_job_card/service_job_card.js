@@ -24,7 +24,9 @@ frappe.ui.form.on('Service Job Card', {
 					parent: parent,
 					is_billable: 1,
 					is_return: 0
-				}
+				},
+				order_by: 'idx ASC',
+				page_length: 100
 			}).then(records => {
 				if (records.length > 0){
 					let d = new frappe.ui.Dialog({
