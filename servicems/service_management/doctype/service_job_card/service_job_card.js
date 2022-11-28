@@ -19,7 +19,7 @@ frappe.ui.form.on('Service Job Card', {
 		if (frm.doc.docstatus == 0) {
 			var parent = frm.doc.name;
 			frappe.db.get_list("Supplied Parts", {
-				fields: ["item", "qty", "rate", "stock_entry", "parent", "parenttype"],
+				fields: ["idx", "item", "spare", "qty", "rate", "stock_entry", "parent", "parenttype"],
 				filters: {
 					parent: parent,
 					is_billable: 1,
@@ -41,18 +41,22 @@ frappe.ui.form.on('Service Job Card', {
 					
 					let html = `<table class="table table-hover" style="width:100%;">
 						<colgroup>
-							<col width="6%">
-							<col width="35%">
+							<col width="5%">
+							<col width="5%%">
+							<col width="25%">
+							<col width="10%">
 							<col width="5%">
 							<col width="15%">
 							<col width="5%">
-							<col width="12%">
+							<col width="10%">
 							<col width="5%">
 							<col width="15%">
 						</colgroup>
 						<tr style="background-color: #D3D3D3;">
 							<th></th>
+							<th>S/N</th>
 							<th>Item</th>
+							<th>Spare</th>
 							<th></th>
 							<th>Rate</th>
 							<th></th>
@@ -64,7 +68,9 @@ frappe.ui.form.on('Service Job Card', {
 					records.forEach(row => {
 						html += `<tr>
 							<td><input type="checkbox"/></td>
+							<td id="idx" data-idx="${row.idx}">${row.idx}</td>
 							<td id="item" data-item="${row.item}">${row.item}</td>
+							<td id="spare" data-spare="${row.spare}">${row.spare}</td>
 							<td id="stock_entry" data-stock_entry="${row.stock_entry}"></td>
 							<td id="rate" data-rate="${row.rate}">${row.rate}</td>
 							<td id="parent" data-parent="${row.parent}"></td>
@@ -89,6 +95,7 @@ frappe.ui.form.on('Service Job Card', {
 						wrapper.find('tr:has(input:checkbox:checked)').each(function() {
 							items.push({
 								"item":  $(this).find("#item").attr("data-item"),
+								"spare":  $(this).find("#spare").attr("data-spare"),
 								"stock_entry": $(this).find("#stock_entry").attr("data-stock_entry"),
 								"rate": $(this).find("#rate").attr("data-rate"),
 								"parent": $(this).find("#parent").attr("data-parent"),
@@ -117,6 +124,10 @@ frappe.ui.form.on('Service Job Card', {
 							});
 						}
 					});
+					d.wrapper.find(".modal-content").css({
+						"overflow": "auto",
+						"max-height": "1500px"
+					})
 					
 					d.show();
 				
