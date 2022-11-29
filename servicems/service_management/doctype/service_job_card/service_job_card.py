@@ -378,3 +378,13 @@ def updated_supplied_parts(doc, selected_items, name):
                     row.is_return = 1
     doc.save()
     doc.reload()
+
+
+@frappe.whitelist()
+def get_all_supplied_parts(job_card):
+    return frappe.get_all("Supplied Parts", 
+        filters={"parent": job_card, "is_billable": 1, "is_return": 0},
+        fields=["idx", "item", "item_name", "qty", "rate", "stock_entry", "parent", "parenttype"],
+        order_by = 'idx ASC',
+        page_length=100
+    )
