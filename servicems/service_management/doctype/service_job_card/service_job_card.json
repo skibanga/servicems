@@ -46,7 +46,7 @@
   "column_break_38",
   "service_charges",
   "spares_cost",
-  "total_excl_vat",
+  "total",
   "amended_from",
   "route",
   "section_break_41",
@@ -101,7 +101,7 @@
   "column_break_91",
   "parts_no",
   "column_break_93",
-  "total"
+  "total_estimated"
  ],
  "fields": [
   {
@@ -261,8 +261,9 @@
   },
   {
    "fieldname": "total",
-   "fieldtype": "Small Text",
-   "label": "Total"
+   "fieldtype": "Currency",
+   "label": "Total Excl. Vat",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_38",
@@ -641,12 +642,6 @@
    "label": "Part No"
   },
   {
-   "fieldname": "total_excl_vat",
-   "fieldtype": "Currency",
-   "label": "Total Excl. Vat",
-   "read_only": 1
-  },
-  {
    "fieldname": "column_break_93",
    "fieldtype": "Column Break"
   },
@@ -657,6 +652,11 @@
    "fieldtype": "Check",
    "label": "Use Spare Not Item",
    "read_only": 1
+  },
+  {
+   "fieldname": "total_estimated",
+   "fieldtype": "Currency",
+   "label": "Total"
   }
  ],
  "has_web_view": 1,
@@ -668,7 +668,7 @@
    "link_fieldname": "service_job_card"
   }
  ],
- "modified": "2022-11-17 22:17:15.353788",
+ "modified": "2022-11-29 12:50:03.913615",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",
