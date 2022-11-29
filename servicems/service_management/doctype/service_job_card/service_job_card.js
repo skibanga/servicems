@@ -20,7 +20,8 @@ frappe.ui.form.on('Service Job Card', {
 			frappe.call("servicems.service_management.doctype.service_job_card.service_job_card.get_all_supplied_parts", {
 				job_card: frm.doc.name
 			}).then(records => {
-				if (records.length > 0){
+				var data = records.message;
+				if (data.length > 0){
 					let d = new frappe.ui.Dialog({
 						title: "Select Item to Unbill",
 						fields: [
@@ -35,15 +36,15 @@ frappe.ui.form.on('Service Job Card', {
 					let html = `<table class="table table-hover" style="width:100%;">
 						<colgroup>
 							<col width="5%">
-							<col width="5%%">
+							<col width="5%">
+							<col width="15%">
 							<col width="20%">
-							<col width="15%">
 							<col width="5%">
 							<col width="15%">
 							<col width="5%">
-							<col width="10%">
 							<col width="5%">
-							<col width="15%">
+							<col width="5%">
+							<col width="25%">
 						</colgroup>
 						<tr style="background-color: #D3D3D3;">
 							<th></th>
@@ -58,7 +59,7 @@ frappe.ui.form.on('Service Job Card', {
 							<th>Qty to Return</th>
 						</tr>`
 					
-					records.forEach(row => {
+					data.forEach(row => {
 						html += `<tr>
 							<td><input type="checkbox"/></td>
 							<td id="idx" data-idx="${row.idx}">${row.idx}</td>
@@ -118,9 +119,11 @@ frappe.ui.form.on('Service Job Card', {
 						}
 					});
 					d.$wrapper.find('.modal-content').css({
-						"width": "1500px",
+						"width": "900px",
 						"max-height": "1500px",
-						"overflow": "auto",
+						"overflow-y": "auto",
+						"display": "table-cell",
+						"text-align": "left"
 					});
 					
 					d.show();
@@ -172,7 +175,7 @@ var get_qty_to_return = function(wrapper) {
 		$(this).on("click", "input:checkbox", function() {
 			if ($("input:checkbox").is(":checked") == true) {
 				if ($(this).parent().siblings().last().html() == "") {
-					$("<input type='number' id='return' style='border: 3px solid red'>")
+					$("<input type='number' id='return' style='border: 3px solid red; width: 60px;'>")
 					.appendTo($(this).parent().siblings().last());
 
 					$("#return").focusout("input", function() {
