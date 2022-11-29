@@ -17,16 +17,8 @@ frappe.ui.form.on('Service Job Card', {
 
 	unbill_item: function (frm) {
 		if (frm.doc.docstatus == 0) {
-			var parent = frm.doc.name;
-			frappe.db.get_list("Supplied Parts", {
-				fields: ["idx", "item", "item_name", "qty", "rate", "stock_entry", "parent", "parenttype"],
-				filters: {
-					parent: parent,
-					is_billable: 1,
-					is_return: 0
-				},
-				order_by: 'idx ASC',
-				page_length: 100
+			frappe.call("servicems.service_management.doctype.service_job_card.service_job_card.get_all_supplied_parts", {
+				job_card: frm.doc.name
 			}).then(records => {
 				if (records.length > 0){
 					let d = new frappe.ui.Dialog({
@@ -35,7 +27,6 @@ frappe.ui.form.on('Service Job Card', {
 							{
 								fieldname: "open_space",
 								fieldtype: "HTML",
-								width: "1300px"
 							}
 						],
 
@@ -126,10 +117,11 @@ frappe.ui.form.on('Service Job Card', {
 							});
 						}
 					});
-					d.wrapper.find(".modal-content").css({
+					d.$wrapper.find('.modal-content').css({
+						"width": "1500px",
+						"max-height": "1500px",
 						"overflow": "auto",
-						"max-height": "1500px"
-					})
+					});
 					
 					d.show();
 				
