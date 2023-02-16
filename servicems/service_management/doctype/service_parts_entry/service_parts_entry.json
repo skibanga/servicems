@@ -9,13 +9,18 @@
  "field_order": [
   "items_section",
   "naming_series",
+  "stock_entry_type",
   "company",
+  "status",
   "col2",
   "posting_date",
   "posting_time",
   "set_posting_time",
+  "stock_reference_no",
   "sb0",
   "scan_barcode",
+  "source_warehouse",
+  "target_warehouse",
   "items",
   "accounting_dimensions_section",
   "department",
@@ -216,16 +221,46 @@
    "options": "Service Parts Entry",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Data",
+   "label": "Status",
+   "read_only": 1
+  },
+  {
+   "fieldname": "stock_reference_no",
+   "fieldtype": "Data",
+   "label": "Stock Reference No",
+   "read_only": 1
+  },
+  {
+   "fieldname": "stock_entry_type",
+   "fieldtype": "Data",
+   "label": "Stock Entry Type"
+  },
+  {
+   "fieldname": "source_warehouse",
+   "fieldtype": "Data",
+   "label": "Source Warehouse",
+   "read_only": 1
+  },
+  {
+   "fieldname": "target_warehouse",
+   "fieldtype": "Data",
+   "label": "Target Warehouse",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-file-text",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-04-03 22:43:14.600285",
+ "modified": "2023-02-15 12:40:46.483746",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Parts Entry",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
@@ -264,6 +299,7 @@
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "states": [],
  "title_field": "service_job_card",
  "track_changes": 1
 }

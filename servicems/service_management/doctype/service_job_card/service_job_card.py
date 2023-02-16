@@ -16,13 +16,11 @@ class ServiceJobCard(WebsiteGenerator):
         self.vaildate_complete()
 
     def before_submit(self):
-        use_parts_entry = (
-            frappe.get_value("Company Service Management Settings", "use_parts_entry")
-            or 0
+        use_parts_entry = frappe.get_value(
+            "Company Service Management Settings", self.company, "use_parts_entry"
         )
-        if use_parts_entry:
-            self.create_parts_entry("before_submit")
-        else:
+
+        if not use_parts_entry:
             self.create_stock_entry("before_submit")
             self.create_invoice()
 
@@ -86,54 +84,79 @@ class ServiceJobCard(WebsiteGenerator):
             if not item.rate:
                 item.rate = get_item_price(item.item, price_list, self.company)
 
-    # @frappe.whitelist()
+    @frappe.whitelist()
     def create_parts_entry(self, type):
-        if self.parts and len(self.parts) > 0:
-            items = []
-            for item in self.parts:
-                if item.qty > 0:
-                    items.append(
-                        {
-                            "item_code": item.item,
-                            "qty": item.qty,
-                        }
-                    )
+        if not self.parts:
+            frappe.throw(_("Add Parts and Consumable Supplied first."))
 
-            if len(items) == 0:
-                return
+        supplied_items = []
+        items = []
+        for item_row in self.parts:
+            if (
+                item_row.service_parts_entry
+                or item_row.use_existing_spares
+                or not item_row.qty
+            ):
+                continue
 
-            doc = frappe.get_doc(
-                dict(
-                    doctype="Service Parts Entry",
-                    posting_date=nowdate(),
-                    posting_time=nowtime(),
-                    company=self.company,
-                    service_job_card=self.name,
-                    items=items,
-                ),
-            )
-            frappe.flags.ignore_account_permission = True
-            doc.insert(ignore_permissions=True)
-            doc.submit()
-            frappe.msgprint(
-                _("Service Parts Entry Created {0}").format(doc.name), alert=True
+            item_dict = frappe._dict(
+                {
+                    "item_code": item_row.item,
+                    "qty": item_row.qty,
+                    "basic_rate": item_row.rate,
+                }
             )
 
-            if doc.get("name"):
-                left_parts = []
-                for row in self.parts:
-                    if row.qty > 0:
-                        new_row = self.append("supplied_parts", {})
-                        new_row.item = row.item
-                        new_row.qty = row.qty
-                        new_row.rate = row.rate
-                        new_row.is_billable = row.is_billable
-                        new_row.stock_entry = doc.name
-                    else:
-                        left_parts.append(row)
-                self.parts = left_parts
-                if type == "call":
-                    self.save()
+            items.append(item_dict)
+            supplied_items.append(item_row.name)
+
+        if not len(items):
+            frappe.throw(_("Items not available to create Parts Entry."))
+
+        service_parts_entry = frappe.get_doc(
+            dict(
+                doctype="Service Parts Entry",
+                posting_date=nowdate(),
+                posting_time=nowtime(),
+                company=self.company,
+                service_job_card=self.name,
+                items=items,
+            ),
+        )
+
+        frappe.flags.ignore_account_permission = True
+        service_parts_entry.insert(ignore_permissions=True)
+        service_parts_entry.submit()
+
+        if not service_parts_entry.get("name"):
+            return
+
+        frappe.msgprint(
+            _("Service Parts Entry {0} Created").format(service_parts_entry.name),
+            alert=True,
+        )
+
+        self.update_supplied_parts_details(supplied_items, service_parts_entry.name)
+
+        if type == "call":
+            self.save()
+
+    def update_supplied_parts_details(self, supplied_items, parts_entry_no):
+        for row in self.parts:
+            if row.name not in supplied_items:
+                continue
+
+            row.service_parts_entry = parts_entry_no
+
+            self.append(
+                "supplied_parts",
+                {
+                    "item": row.item,
+                    "qty": row.qty,
+                    "rate": row.rate,
+                    "is_billable": row.is_billable,
+                },
+            )
 
     @frappe.whitelist()
     def create_stock_entry(self, type):
@@ -382,9 +405,19 @@ def updated_supplied_parts(doc, selected_items, name):
 
 @frappe.whitelist()
 def get_all_supplied_parts(job_card):
-    return frappe.get_all("Supplied Parts", 
+    return frappe.get_all(
+        "Supplied Parts",
         filters={"parent": job_card, "is_billable": 1, "is_return": 0},
-        fields=["idx", "item", "item_name", "qty", "rate", "stock_entry", "parent", "parenttype"],
-        order_by = 'idx ASC',
-        page_length=100
+        fields=[
+            "idx",
+            "item",
+            "item_name",
+            "qty",
+            "rate",
+            "stock_entry",
+            "parent",
+            "parenttype",
+        ],
+        order_by="idx ASC",
+        page_length=100,
     )
