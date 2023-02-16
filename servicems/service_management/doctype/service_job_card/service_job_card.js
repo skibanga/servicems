@@ -3,11 +3,13 @@
 
 frappe.ui.form.on('Service Job Card', {
 	onload: function (frm) {
-		setMatrialBtn(frm);
+		set_custom_buttons(frm);
 
 	},
 	refresh: function (frm) {
-		setMatrialBtn(frm);
+		set_custom_buttons(frm);
+		remove_delete_button(frm);
+
 		cur_frm.set_query("item", "parts", () => {
 			return {
 				query: "servicems.service_management.doctype.service_settings.service_settings.get_filtered_items",
@@ -145,29 +147,39 @@ frappe.ui.form.on('Service Job Card', {
 				};
 			});
 		}
+	},
+
+	create_parts_entry: function (frm) {
+		frm.call('create_parts_entry', { type: "call" }).then(r => {
+			frm.reload_doc();
+		});
+	},
+	create_stock_entry: async function (frm) {
+		if (frm.is_dirty()) {
+			await frm.save();
+		}
+		frm.call('create_stock_entry', { type: "call" })
+			.then(r => {
+				frm.reload_doc();
+			});
 	}
 });
 
-
-const setMatrialBtn = frm => {
+function set_custom_buttons (frm) {
 	if (!frm.is_dirty() && frm.doc.docstatus == 0) {
-		frm.add_custom_button('Create Stock Entry', () => {
-			createStockEntry(frm);
-		});
+		frm.add_custom_button('Stock Entry', () => {
+			frm.trigger('create_stock_entry');
+		}, 'Create');
+
+		if (is_parts_entry_applicable(frm)) {
+			frm.add_custom_button('Service Parts Entry', () => {
+				frm.trigger('create_parts_entry');
+			}, 'Create');
+		}
 	}
 	else {
-		frm.remove_custom_button('Create Stock Entry');
+		frm.remove_custom_button('Stock Entry', 'Create');
 	}
-};
-
-const createStockEntry = async function (frm) {
-	if (frm.is_dirty()) {
-		await frm.save();
-	}
-	frm.call('create_stock_entry', { type: "call" })
-		.then(r => {
-			frm.reload_doc();
-		});
 };
 
 var get_qty_to_return = function(wrapper) {
@@ -206,3 +218,23 @@ var get_qty_to_return = function(wrapper) {
 		});
 	});
 };
+
+function is_parts_entry_applicable (frm) {
+	let items = [];
+
+	frm.doc.parts.forEach((item_row) => {
+		if (!item_row.service_parts_entry && !item_row.use_existing_spares && item_row.qty) {
+			items.push(item_row.name);
+		}
+	})
+	return items.length ? true : false;
+
+}
+
+function remove_delete_button(frm) {
+	frm.set_df_property('parts', 'cannot_delete_rows', frm.doc.parts.filter(fetch_row_with_parts_entry) ? true : false);
+}
+
+function fetch_row_with_parts_entry(row) {
+	return row.service_parts_entry;
+}

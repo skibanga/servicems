@@ -16,13 +16,11 @@ class ServiceJobCard(WebsiteGenerator):
         self.vaildate_complete()
 
     def before_submit(self):
-        use_parts_entry = (
-            frappe.get_value("Company Service Management Settings", "use_parts_entry")
-            or 0
+        use_parts_entry = frappe.get_value(
+            "Company Service Management Settings", self.company, "use_parts_entry"
         )
-        if use_parts_entry:
-            self.create_parts_entry("before_submit")
-        else:
+
+        if not use_parts_entry:
             self.create_stock_entry("before_submit")
             self.create_invoice()
 
@@ -32,29 +30,41 @@ class ServiceJobCard(WebsiteGenerator):
 
     def update_tables(self):
         for template in self.services:
-            if not template.bypass_billable:
-                template.is_billable = frappe.get_value(
-                    "Service Template", template.service, "is_billable"
-                )
-            if not template.applied:
-                template_doc = frappe.get_doc("Service Template", template.service)
-                if template_doc.tasks:
-                    for task in template_doc.tasks:
-                        row = self.append("tasks", {})
-                        row.task_name = task.task_name
-                        row.template = template_doc.name
+            if template.bypass_billable and template.applied:
+                continue
 
-                if template_doc.parts:
-                    for part in template_doc.parts:
-                        row = self.append("parts", {})
-                        row.item = part.item
-                        row.qty = part.qty
-                        row.rate = get_item_price(
-                            part.item,
-                            self.get_price_list(template_doc.price_list),
-                            self.company,
+            service_template = frappe.get_doc("Service Template", template.service)
+
+            if not template.bypass_billable:
+                template.is_billable = service_template.is_billable
+
+            if not template.applied:
+                if service_template.tasks:
+                    for task in service_template.tasks:
+                        self.append(
+                            "tasks",
+                            {
+                                "task_name": task.task_name,
+                                "template": service_template.name,
+                            },
                         )
-                        row.is_billable = part.is_billable
+
+                if service_template.parts:
+                    for part in service_template.parts:
+                        self.append(
+                            "parts",
+                            {
+                                "item": part.item,
+                                "qty": part.qty,
+                                "rate": get_item_price(
+                                    part.item,
+                                    self.get_price_list(service_template.price_list),
+                                    self.company,
+                                ),
+                                "is_billable": part.is_billable,
+                            },
+                        )
+
                 template.applied = 1
 
     def set_totals(self):
@@ -83,57 +93,84 @@ class ServiceJobCard(WebsiteGenerator):
     def set_parts_rate(self):
         price_list = self.get_price_list()
         for item in self.parts:
-            if not item.rate:
-                item.rate = get_item_price(item.item, price_list, self.company)
+            if item.rate:
+                continue
 
-    # @frappe.whitelist()
+            item.rate = get_item_price(item.item, price_list, self.company)
+
+    @frappe.whitelist()
     def create_parts_entry(self, type):
-        if self.parts and len(self.parts) > 0:
-            items = []
-            for item in self.parts:
-                if item.qty > 0:
-                    items.append(
-                        {
-                            "item_code": item.item,
-                            "qty": item.qty,
-                        }
-                    )
+        if not self.parts:
+            frappe.throw(_("Add Parts and Consumable Supplied first."))
 
-            if len(items) == 0:
-                return
+        supplied_items = []
+        items = []
+        for item_row in self.parts:
+            if (
+                item_row.service_parts_entry
+                or item_row.use_existing_spares
+                or not item_row.qty
+            ):
+                continue
 
-            doc = frappe.get_doc(
-                dict(
-                    doctype="Service Parts Entry",
-                    posting_date=nowdate(),
-                    posting_time=nowtime(),
-                    company=self.company,
-                    service_job_card=self.name,
-                    items=items,
-                ),
-            )
-            frappe.flags.ignore_account_permission = True
-            doc.insert(ignore_permissions=True)
-            doc.submit()
-            frappe.msgprint(
-                _("Service Parts Entry Created {0}").format(doc.name), alert=True
+            item_dict = frappe._dict(
+                {
+                    "item_code": item_row.item,
+                    "qty": item_row.qty,
+                    "basic_rate": item_row.rate,
+                }
             )
 
-            if doc.get("name"):
-                left_parts = []
-                for row in self.parts:
-                    if row.qty > 0:
-                        new_row = self.append("supplied_parts", {})
-                        new_row.item = row.item
-                        new_row.qty = row.qty
-                        new_row.rate = row.rate
-                        new_row.is_billable = row.is_billable
-                        new_row.stock_entry = doc.name
-                    else:
-                        left_parts.append(row)
-                self.parts = left_parts
-                if type == "call":
-                    self.save()
+            items.append(item_dict)
+            supplied_items.append(item_row.name)
+
+        if not len(items):
+            frappe.throw(_("Items not available to create Parts Entry."))
+
+        service_parts_entry = frappe.get_doc(
+            dict(
+                doctype="Service Parts Entry",
+                posting_date=nowdate(),
+                posting_time=nowtime(),
+                company=self.company,
+                service_job_card=self.name,
+                items=items,
+            ),
+        )
+
+        frappe.flags.ignore_account_permission = True
+        service_parts_entry.insert(ignore_permissions=True)
+        service_parts_entry.submit()
+
+        if not service_parts_entry.get("name"):
+            return
+
+        frappe.msgprint(
+            _("Service Parts Entry {0} Created").format(service_parts_entry.name),
+            alert=True,
+        )
+
+        self.update_supplied_parts_details(supplied_items, service_parts_entry.name)
+
+        if type == "call":
+            self.save()
+
+    def update_supplied_parts_details(self, supplied_items, parts_entry_no):
+        for row in self.parts:
+            if row.name not in supplied_items:
+                continue
+
+            row.service_parts_entry = parts_entry_no
+
+            self.append(
+                "supplied_parts",
+                {
+                    "item": row.item,
+                    "qty": row.qty,
+                    "rate": row.rate,
+                    "is_billable": row.is_billable,
+                },
+            )
 
     @frappe.whitelist()
     def create_stock_entry(self, type):
@@ -261,17 +298,17 @@ class ServiceJobCard(WebsiteGenerator):
     def vaildate_complete(self):
         if self.status != "Completed":
             return
-        completed = True
+
         for task in self.tasks:
             if not task.completed:
-                completed = False
-        if not completed:
-            frappe.throw(_("The Tasks is not Completed"))
+                frappe.throw(_("Row #{0}: The Tasks is not Completed").format(task.idx))
 
     def get_price_list(self, template_price_list=None):
         price_list = frappe.get_value("Customer", self.customer, "default_price_list")
+
         if not price_list and template_price_list:
             price_list = template_price_list
+
         if not price_list:
             price_list = frappe.get_value(
                 "Service Settings", "Service Settings", "price_list"
@@ -280,21 +317,20 @@ class ServiceJobCard(WebsiteGenerator):
 
 
 def get_item_price(item_code, price_list, company):
-    price = 0
     company_currency = frappe.get_value("Company", company, "default_currency")
-    item_prices_data = frappe.get_all(
+    item_prices_data = frappe.db.get_value(
         "Item Price",
-        fields=["item_code", "price_list_rate", "currency"],
         filters={
             "price_list": price_list,
             "item_code": item_code,
             "currency": company_currency,
         },
+        fieldname=["item_code", "price_list_rate", "currency"],
+        as_dict=True,
         order_by="valid_from desc",
     )
-    if len(item_prices_data):
-        price = item_prices_data[0].price_list_rate or 0
-    return price
+
+    return item_prices_data.price_list_rate if item_prices_data else 0
 
 
 @frappe.whitelist()
@@ -382,9 +418,19 @@ def updated_supplied_parts(doc, selected_items, name):
 
 @frappe.whitelist()
 def get_all_supplied_parts(job_card):
-    return frappe.get_all("Supplied Parts", 
+    return frappe.get_all(
+        "Supplied Parts",
         filters={"parent": job_card, "is_billable": 1, "is_return": 0},
-        fields=["idx", "item", "item_name", "qty", "rate", "stock_entry", "parent", "parenttype"],
-        order_by = 'idx ASC',
-        page_length=100
+        fields=[
+            "idx",
+            "item",
+            "item_name",
+            "qty",
+            "rate",
+            "stock_entry",
+            "parent",
+            "parenttype",
+        ],
+        order_by="idx ASC",
+        page_length=100,
     )
