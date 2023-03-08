@@ -1,7 +1,6 @@
 {
  "actions": [],
  "allow_guest_to_view": 1,
- "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:item_code",
  "creation": "2022-11-17 22:04:50.933251",
@@ -121,10 +120,11 @@
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-11-28 09:30:13.695541",
+ "modified": "2023-02-22 13:00:52.345011",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Spare",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -132,11 +132,10 @@
    "delete": 1,
    "email": 1,
    "export": 1,
-   "import": 1,
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Item Manager",
+   "role": "System Manager",
    "share": 1,
    "write": 1
   }
@@ -147,6 +146,7 @@
  "show_preview_popup": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "states": [],
  "title_field": "item_name",
  "track_changes": 1
 }

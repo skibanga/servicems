@@ -91,17 +91,7 @@
   "trailer_axle_right_1_and_2",
   "trailer_axle_2_right_1_and_2",
   "trailer_axle_3_right_1_and_2",
-  "spare_wheel_2",
-  "section_break_83",
-  "driver_verbatin_column",
-  "text_83",
-  "service_advisor_instructor_column",
-  "section_break_89",
-  "parts_description",
-  "column_break_91",
-  "parts_no",
-  "column_break_93",
-  "total_estimated"
+  "spare_wheel_2"
  ],
  "fields": [
   {
@@ -111,6 +101,7 @@
    "options": "SJC-.YY.-.######"
   },
   {
+   "allow_on_submit": 1,
    "default": "Initiated",
    "fieldname": "status",
    "fieldtype": "Select",
@@ -548,28 +539,9 @@
   },
   {
    "bold": 1,
-   "fieldname": "driver_verbatin_column",
-   "fieldtype": "Small Text",
-   "label": "Driver Verbatin"
-  },
-  {
-   "fieldname": "service_advisor_instructor_column",
-   "fieldtype": "Small Text",
-   "label": "Service Advisor Instructor"
-  },
-  {
-   "fieldname": "text_83",
-   "fieldtype": "Column Break"
-  },
-  {
-   "bold": 1,
    "fieldname": "section_break_82",
    "fieldtype": "Heading",
    "label": "Remark/Vehicles diagnosis report"
-  },
-  {
-   "fieldname": "section_break_83",
-   "fieldtype": "Section Break"
   },
   {
    "fieldname": "data_83",
@@ -622,41 +594,12 @@
    "options": "\nAbove 10 mm\nAround 7 mm\nLess than 2.6 mm"
   },
   {
-   "fieldname": "section_break_89",
-   "fieldtype": "Section Break",
-   "label": "Estimated Repair"
-  },
-  {
-   "bold": 1,
-   "fieldname": "parts_description",
-   "fieldtype": "Small Text",
-   "label": "Part Description"
-  },
-  {
-   "fieldname": "column_break_91",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "parts_no",
-   "fieldtype": "Small Text",
-   "label": "Part No"
-  },
-  {
-   "fieldname": "column_break_93",
-   "fieldtype": "Column Break"
-  },
-  {
    "default": "0",
    "fetch_from": "workshop.use_spare_not_item",
    "fieldname": "use_spare_not_item",
    "fieldtype": "Check",
    "label": "Use Spare Not Item",
    "read_only": 1
-  },
-  {
-   "fieldname": "total_estimated",
-   "fieldtype": "Currency",
-   "label": "Total"
   }
  ],
  "has_web_view": 1,
@@ -668,10 +611,11 @@
    "link_fieldname": "service_job_card"
   }
  ],
- "modified": "2022-11-29 12:50:03.913615",
+ "modified": "2023-02-20 17:15:52.103377",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
@@ -693,5 +637,6 @@
  "route": "job-card",
  "sort_field": "modified",
  "sort_order": "DESC",
+ "states": [],
  "track_changes": 1
 }
