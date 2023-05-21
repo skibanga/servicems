@@ -162,6 +162,20 @@ frappe.ui.form.on('Service Job Card', {
 			.then(r => {
 				frm.reload_doc();
 			});
+	},
+	service_item_name: async function(frm){
+		frm.set_value('last_service_date', '');
+		const service_job_card = await frappe.db.get_list('Service Job Card',{
+		        filters: {
+					'service_item_name': frm.doc.service_item_name,
+					'workflow_state': 'Closed'
+				},
+				order_by:'modified desc',
+				fields: ['modified'],
+			})
+		if(service_job_card[0]){
+			frm.set_value('last_service_date', service_job_card[0].modified);
+		}
 	}
 });
 
