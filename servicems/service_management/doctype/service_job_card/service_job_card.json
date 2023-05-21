@@ -28,6 +28,7 @@
   "engine_number",
   "chassis_number",
   "odometer_reading",
+  "last_service_date",
   "vin",
   "section_break_11",
   "complains",
@@ -600,6 +601,12 @@
    "fieldtype": "Check",
    "label": "Use Spare Not Item",
    "read_only": 1
+  },
+  {
+   "fieldname": "last_service_date",
+   "fieldtype": "Datetime",
+   "label": "Last Service Date",
+   "read_only": 1
   }
  ],
  "has_web_view": 1,
@@ -611,7 +618,7 @@
    "link_fieldname": "service_job_card"
   }
  ],
- "modified": "2023-02-20 17:15:52.103377",
+ "modified": "2023-05-21 22:07:38.106225",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",
