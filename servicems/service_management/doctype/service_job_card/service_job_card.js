@@ -166,16 +166,47 @@ frappe.ui.form.on('Service Job Card', {
 	service_item_name: async function(frm){
 		frm.set_value('last_service_date', '');
 		const last_service_date = await frappe.db.get_list('Service Job Card',{
-		        filters: {
-					'service_item_name': frm.doc.service_item_name,
-					'workflow_state': 'Closed'
-				},
-				order_by:'modified desc',
-				fields: ['modified'],
+		      filters: {
+              'service_item_name': frm.doc.service_item_name,
+              'workflow_state': 'Closed'
+          },
+          order_by:'modified desc',
+          fields: ['modified'],
 			})
 		if(last_service_date[0]){
 			frm.set_value('last_service_date', last_service_date[0].modified);
 		}
+	},
+  odometer_reading: async function(frm){
+		frm.set_value('last_service_odometer_reading', '');
+		if (frm.doc.service_item_name) {
+			const last_odometer_reading = await frappe.db.get_list('Service Job Card',{
+		     filters: {
+					'service_item_name': frm.doc.service_item_name,
+					'workflow_state': 'Closed'
+				},
+				order_by:'modified desc',
+				fields: ['odometer_reading'],
+			})
+			if(last_odometer_reading[0]){
+				frm.set_value('last_service_odometer_reading', last_odometer_reading[0].odometer_reading);
+				const recommended_interval = await frappe.db.get_value('Service Vehicle',frm.doc.service_item_name, 'recommended_service_interval')
+
+				if (recommended_interval.message.recommended_service_interval) {
+					let prev_odometer_reading = Number(last_odometer_reading[0].odometer_reading);
+					let current_odometer_reading = Number(frm.doc.odometer_reading);
+					let interval = current_odometer_reading - prev_odometer_reading;
+ 
+					if(interval >= recommended_interval.message.recommended_service_interval){
+						frappe.show_alert({
+							message:__('Vehicle '+frm.doc.service_item_name+' Requires Service'),
+							indicator:'red'
+						}, 8);
+					}
+				}  
+			}
+		}
+		
 	}
 });
 

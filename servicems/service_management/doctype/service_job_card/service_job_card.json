@@ -29,6 +29,7 @@
   "chassis_number",
   "odometer_reading",
   "last_service_date",
+  "last_service_odometer_reading",
   "vin",
   "section_break_11",
   "complains",
@@ -607,6 +608,11 @@
    "fieldtype": "Datetime",
    "label": "Last Service Date",
    "read_only": 1
+  },
+  {
+     "fieldname": "last_service_odometer_reading",
+     "fieldtype": "Data",
+     "label": "Last Service Odometer Reading",
   }
  ],
  "has_web_view": 1,

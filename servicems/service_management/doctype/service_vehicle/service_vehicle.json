@@ -12,6 +12,7 @@
   "mobile_no",
   "section_break_3",
   "vehicle_model",
+  "recommended_service_interval",
   "column_break_5",
   "make",
   "type",
@@ -108,14 +109,20 @@
    "fieldname": "vin",
    "fieldtype": "Data",
    "label": "VIN"
+  },
+  {
+   "fieldname": "recommended_service_interval",
+   "fieldtype": "Data",
+   "label": "Recommended Service Interval"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-10-20 12:29:44.525540",
+ "modified": "2023-05-21 21:23:32.184147",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Vehicle",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -133,5 +140,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
+ "states": [],
  "track_changes": 1
 }
