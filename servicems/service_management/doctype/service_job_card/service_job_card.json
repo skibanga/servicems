@@ -28,6 +28,7 @@
   "engine_number",
   "chassis_number",
   "odometer_reading",
+  "last_service_date",
   "last_service_odometer_reading",
   "vin",
   "section_break_11",
@@ -603,10 +604,15 @@
    "read_only": 1
   },
   {
-   "fieldname": "last_service_odometer_reading",
-   "fieldtype": "Data",
-   "label": "Last Service Odometer Reading",
+   "fieldname": "last_service_date",
+   "fieldtype": "Datetime",
+   "label": "Last Service Date",
    "read_only": 1
+  },
+  {
+     "fieldname": "last_service_odometer_reading",
+     "fieldtype": "Data",
+     "label": "Last Service Odometer Reading",
   }
  ],
  "has_web_view": 1,
@@ -618,7 +624,7 @@
    "link_fieldname": "service_job_card"
   }
  ],
- "modified": "2023-05-21 21:59:04.545523",
+ "modified": "2023-05-21 22:07:38.106225",
  "modified_by": "Administrator",
  "module": "Service Management",
  "name": "Service Job Card",

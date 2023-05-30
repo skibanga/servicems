@@ -163,11 +163,25 @@ frappe.ui.form.on('Service Job Card', {
 				frm.reload_doc();
 			});
 	},
-	odometer_reading: async function(frm){
+	service_item_name: async function(frm){
+		frm.set_value('last_service_date', '');
+		const last_service_date = await frappe.db.get_list('Service Job Card',{
+		      filters: {
+              'service_item_name': frm.doc.service_item_name,
+              'workflow_state': 'Closed'
+          },
+          order_by:'modified desc',
+          fields: ['modified'],
+			})
+		if(last_service_date[0]){
+			frm.set_value('last_service_date', last_service_date[0].modified);
+		}
+	},
+  odometer_reading: async function(frm){
 		frm.set_value('last_service_odometer_reading', '');
 		if (frm.doc.service_item_name) {
 			const last_odometer_reading = await frappe.db.get_list('Service Job Card',{
-		        filters: {
+		     filters: {
 					'service_item_name': frm.doc.service_item_name,
 					'workflow_state': 'Closed'
 				},
